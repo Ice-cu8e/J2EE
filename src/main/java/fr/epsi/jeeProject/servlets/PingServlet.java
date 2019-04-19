@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet implementation class PingServlet
+ * Servlet implementation class LoginServlet
  */
-@WebServlet(value = "/Ping", name = "PingServlet")
+@WebServlet(value = "/Ping", name = "login")
 public class PingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
