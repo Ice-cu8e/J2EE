@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="db">
+  <database-model serializer="dbm" dbms="HSQLDB" family-id="HSQLDB" format-version="4.15">
+    <root id="1">
+      <ServerVersion>2.4.0</ServerVersion>
+    </root>
+    <database id="2" parent="1" name="PUBLIC">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </database>
+    <schema id="3" parent="2" name="INFORMATION_SCHEMA"/>
+    <schema id="4" parent="2" name="PUBLIC">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="5" parent="2" name="SYSTEM_LOBS"/>
+    <table id="6" parent="4" name="BLOG"/>
+    <table id="7" parent="4" name="BLOG_COMMENTAIRES"/>
+    <table id="8" parent="4" name="STATUT"/>
+    <table id="9" parent="4" name="USERS"/>
+    <column id="10" parent="6" name="ID">
+      <Position>1</Position>
+      <DataType>BIGINT|-5s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="11" parent="6" name="TITRE">
+      <Position>2</Position>
+      <DataType>VARCHAR(140)|12s</DataType>
+    </column>
+    <column id="12" parent="6" name="DESCRIPTION">
+      <Position>3</Position>
+      <DataType>VARCHAR(255)|12s</DataType>
+    </column>
+    <column id="13" parent="6" name="EMAIL">
+      <Position>4</Position>
+      <DataType>VARCHAR(50)|12s</DataType>
+    </column>
+    <column id="14" parent="6" name="DATE_CREATION">
+      <Position>5</Position>
+      <DataType>DATE|91s</DataType>
+    </column>
+    <column id="15" parent="6" name="DATE_MODIFICATION">
+      <Position>6</Position>
+      <DataType>DATE|91s</DataType>
+    </column>
+    <column id="16" parent="6" name="STATUT">
+      <Position>7</Position>
+      <DataType>BIGINT|-5s</DataType>
+    </column>
+    <index id="17" parent="6" name="SYS_IDX_SYS_PK_10092_10093">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="18" parent="6" name="SYS_PK_10092">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="19" parent="7" name="ID">
+      <Position>1</Position>
+      <DataType>BIGINT|-5s</DataType>
+    </column>
+    <column id="20" parent="7" name="COMMENTAIRE">
+      <Position>2</Position>
+      <DataType>VARCHAR(255)|12s</DataType>
+    </column>
+    <column id="21" parent="7" name="EMAIL">
+      <Position>3</Position>
+      <DataType>VARCHAR(50)|12s</DataType>
+    </column>
+    <column id="22" parent="7" name="DATE_CREATION">
+      <Position>4</Position>
+      <DataType>DATE|91s</DataType>
+    </column>
+    <column id="23" parent="8" name="ID">
+      <Position>1</Position>
+      <DataType>BIGINT|-5s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="24" parent="8" name="TITLE">
+      <Position>2</Position>
+      <DataType>VARCHAR(140)|12s</DataType>
+    </column>
+    <index id="25" parent="8" name="SYS_IDX_SYS_PK_10098_10099">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="26" parent="8" name="SYS_PK_10098">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="27" parent="9" name="EMAIL">
+      <Position>1</Position>
+      <DataType>VARCHAR(50)|12s</DataType>
+    </column>
+    <column id="28" parent="9" name="NOM">
+      <Position>2</Position>
+      <DataType>VARCHAR(255)|12s</DataType>
+    </column>
+    <column id="29" parent="9" name="DATE_CREATION">
+      <Position>3</Position>
+      <DataType>DATE|91s</DataType>
+    </column>
+    <column id="30" parent="9" name="PASSWORD">
+      <Position>4</Position>
+      <DataType>VARCHAR(50)|12s</DataType>
+    </column>
+    <column id="31" parent="9" name="IS_ADMIN">
+      <Position>5</Position>
+      <DataType>BOOLEAN|16s</DataType>
+    </column>
+  </database-model>
+</dataSource>
