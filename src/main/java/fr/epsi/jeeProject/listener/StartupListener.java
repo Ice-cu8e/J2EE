@@ -43,7 +43,7 @@ public class StartupListener implements ServletContextListener {
         }
 
         try {
-            Connection c = DriverManager.getConnection("jdbc:hsqldb:mem://localhost:9003", "SA", "");
+            Connection c = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost:9003", "SA", "");
             Logger.error("Connexion ok");
         } catch (SQLException e) {
             Logger.error("Error while connecting", e);

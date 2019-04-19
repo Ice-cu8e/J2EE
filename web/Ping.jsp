@@ -16,10 +16,10 @@
 <body>
     <%
         List<Utilisateur> lesUsers = new ArrayList<>();
-
+        Connection c = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost:9003", "SA", "");
         out.println("Liste des utilisateurs");
         %> <br> <%
-        PreparedStatement prep = c.prepareStatement("SELECT * FROM USERS");
+        PreparedStatement prep = c.prepareStatement("SELECT * FROM Users");
         ResultSet resultSet = prep.executeQuery();
         while (resultSet.next()) {
             %> <br> <%

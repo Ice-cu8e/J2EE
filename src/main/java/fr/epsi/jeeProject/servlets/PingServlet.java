@@ -1,5 +1,6 @@
 package fr.epsi.jeeProject.servlets;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +28,7 @@ public class PingServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Ping: ").append(request.getContextPath());
+		RequestDispatcher RequetsDispatcherObj =request.getRequestDispatcher("/Ping.jsp");
+		RequetsDispatcherObj.forward(request, response);
 	}
 }
