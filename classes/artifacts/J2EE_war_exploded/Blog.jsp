@@ -1,4 +1,5 @@
-<%@ page import="java.sql.*" %><%--
+<%@ page import="java.sql.*" %>
+<%@ page import="fr.epsi.jeeProject.listener.StartupListener" %><%--
   Created by IntelliJ IDEA.
   User: thomas
   Date: 27/02/19
@@ -19,8 +20,8 @@
     String date_creation;
     String date_modification;
     String statut;
-    Connection c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/JEE", "postgres", "postgres");
-    PreparedStatement prep = c.prepareStatement("SELECT * FROM BLOG Where ID=?");
+    Connection connection = StartupListener.c;
+    PreparedStatement prep = connection.prepareStatement("SELECT * FROM BLOG Where ID=?");
     prep.setInt(1,Integer.parseInt(ID));
     ResultSet resultSet = prep.executeQuery();
     while (resultSet.next()) {
