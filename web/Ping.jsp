@@ -16,12 +16,10 @@
 </head>
 <body>
     <%
-        HsqlServer o = new HsqlServer();
 
-        o.startDBServer();
         // some usefull server work here
-        Connection c = o.getDBConn();
         List<Utilisateur> lesUsers = new ArrayList<>();
+        Connection c = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost:9003", "SA", "");
 
         out.println("Liste des utilisateurs");
         %> <br> <%
@@ -29,7 +27,7 @@
         try {
             Statement stmt = c.createStatement();
             //PreparedStatement prep = c.prepareStatement("SELECT * FROM USERS");
-            ResultSet resultSet = stmt.executeQuery("SELECT * FROM USERS");
+            ResultSet resultSet = stmt.executeQuery("SELECT * FROM Users");
             //ResultSet resultSet = prep.executeQuery();
             while (resultSet.next()) {
                 %> <br> <%

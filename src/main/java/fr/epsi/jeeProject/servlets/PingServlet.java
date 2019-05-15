@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import javax.servlet.RequestDispatcher;
+
 
 /**
  * Servlet implementation class PingServlet
@@ -27,6 +29,7 @@ public class PingServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Ping: ").append(request.getContextPath());
+		RequestDispatcher RequetsDispatcherObj =request.getRequestDispatcher("/Ping.jsp");
+		RequetsDispatcherObj.forward(request, response);
 	}
 }

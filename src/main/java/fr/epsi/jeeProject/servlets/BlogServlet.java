@@ -1,5 +1,9 @@
 package fr.epsi.jeeProject.servlets;
 
+import fr.epsi.jeeProject.listener.StartupListener;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,12 +18,14 @@ import java.io.IOException;
 @WebServlet(value = "/Blog", name = "BlogServlet")
 public class BlogServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(StartupListener.class);
 
     /**
      * @see HttpServlet#HttpServlet()
      */
     public BlogServlet() {
         super();
+
         // TODO Auto-generated constructor stub
     }
 
@@ -28,6 +34,7 @@ public class BlogServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
+        Logger.info("OUI");
         String ID=request.getParameter( "ID" );
         request.setAttribute("ID",ID);
         RequestDispatcher RequetsDispatcherObj =request.getRequestDispatcher("/Blog.jsp");

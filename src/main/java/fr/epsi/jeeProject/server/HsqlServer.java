@@ -1,7 +1,6 @@
-package fr.epsi.jeeProject.server;
+/*package fr.epsi.jeeProject.server;
 
 import org.hsqldb.persist.HsqlProperties;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -37,4 +36,4 @@ public class HsqlServer {
         }
         return dbConn;
     }
-}
+}*/
