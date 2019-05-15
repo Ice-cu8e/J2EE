@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static java.lang.Integer.parseInt;
+
 
 /**
  * Servlet implementation class IndexServlet
@@ -44,5 +46,11 @@ public class IndexServlet extends HttpServlet {
             RequestDispatcher RequetsDispatcherObj =request.getRequestDispatcher("/Index.jsp");
             RequetsDispatcherObj.forward(request, response);
         }
+    }
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 }

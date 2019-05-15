@@ -39,7 +39,9 @@ public class HomeServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO Auto-generated method stub
+        // TODO Auto-generated method stub**
+        RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Index.jsp");
+        RequetsDispatcherObj.forward(request, response);
     }
 
     /**
@@ -73,6 +75,7 @@ public class HomeServlet extends HttpServlet {
                 RequetsDispatcherObj.forward(request, response);
             } else {
                 Logger.info("Connexion refusé");
+                session.setAttribute("connexionrefused","Connexion refusé, identifiant ou mot de passe invalide");
                 RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Index.jsp");
                 RequetsDispatcherObj.forward(request, response);
 
