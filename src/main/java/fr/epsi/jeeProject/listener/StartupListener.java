@@ -23,7 +23,7 @@ import static java.lang.System.out;
 
 @WebListener()
 public class StartupListener implements ServletContextListener {
-
+    public static Connection c;
     private static final Logger Logger = LogManager.getLogger(StartupListener.class);
 
     // this will force a reconfiguration
@@ -74,7 +74,7 @@ public class StartupListener implements ServletContextListener {
         }
 
         try {
-            Connection c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/JEE", "postgres", "postgres");
+            c = DriverManager.getConnection("jdbc:postgresql://51.158.111.171:5432/jee", "profjee", "Passw0rdProfJEE");
             Logger.info("Connexion ok");
         } catch (SQLException e) {
             Logger.error("Error while connecting", e);
