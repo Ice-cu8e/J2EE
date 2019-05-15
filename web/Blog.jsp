@@ -12,16 +12,16 @@
 </head>
 <body>
 <%
-    String ID = (String) request.getAttribute("ID");
+    String ID = request.getAttribute("ID").toString();
     String title;
     String description;
     String email;
     String date_creation;
     String date_modification;
     String statut;
-    Connection c = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost:9003", "SA", "");
+    Connection c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/JEE", "postgres", "postgres");
     PreparedStatement prep = c.prepareStatement("SELECT * FROM BLOG Where ID=?");
-    prep.setString(1,ID);
+    prep.setInt(1,Integer.parseInt(ID));
     ResultSet resultSet = prep.executeQuery();
     while (resultSet.next()) {
         title = resultSet.getString(2);

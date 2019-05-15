@@ -67,14 +67,14 @@ public class StartupListener implements ServletContextListener {
 
         //Test de la connextion a hqsql
         try {
-            Class.forName("org.hsqldb.jdbc.JDBCDriver" );
-            Logger.info("Driver hsql et connexion ok");
+            Class.forName("org.postgresql.Driver" );
+            Logger.info("Driver postgresql et connexion ok");
         } catch (Exception e) {
             Logger.error("Erreur de driver", e);
         }
 
         try {
-            Connection c = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost:9003", "SA", "");
+            Connection c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/JEE", "postgres", "postgres");
             Logger.info("Connexion ok");
         } catch (SQLException e) {
             Logger.error("Error while connecting", e);

@@ -12,25 +12,28 @@
 </head>
 <body>
 <%
-    String ID = (String) request.getAttribute("ID");
-    Connection c = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost:9003", "SA", "");
+    String ID = request.getAttribute("ID").toString();
+    String title;
+    String description;
+    String email;
+    String date_creation;
+    String date_modification;
+    String statut;
+    Connection c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/JEE", "postgres", "postgres");
     PreparedStatement prep = c.prepareStatement("SELECT * FROM BLOG Where ID=?");
-    prep.setString(1,ID);
+    prep.setInt(1,Integer.parseInt(ID));
     ResultSet resultSet = prep.executeQuery();
     while (resultSet.next()) {
-        String id=resultSet.getString(1);
-        String title=resultSet.getString(2);
-        String description=resultSet.getString(3);
-        String email=resultSet.getString(4);
-        String date_creation=resultSet.getString(5);
-        String date_modification=resultSet.getString(6);
-        String statut=resultSet.getString(7);
+        title = resultSet.getString(2);
+        description = resultSet.getString(3);
+        email = resultSet.getString(4);
+        date_creation = resultSet.getString(5);
+        date_modification = resultSet.getString(6);
+        statut = resultSet.getString(7);
 
-%> <br> <%
-    out.println(title);
-    out.println(description);
-%> <br <%
-    }
-%>
+%> <br>
+    <div><%out.println(title);%></div>
+    <div><%out.println(description); }%></div>
+ <br>
 </body>
 </html>
