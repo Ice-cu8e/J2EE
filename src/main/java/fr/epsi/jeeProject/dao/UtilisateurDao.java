@@ -4,13 +4,18 @@ import fr.epsi.jeeProject.beans.Blog;
 import fr.epsi.jeeProject.beans.Reponse;
 import fr.epsi.jeeProject.beans.Utilisateur;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static fr.epsi.jeeProject.server.PostgresServer.getConnection;
+
 public class UtilisateurDao implements IUtilisateurDao {
-    private static List<Utilisateur> listOfUtilisateurs;
+    private Connection c = getConnection();
 
     @Override
     public Utilisateur getUtilisateur(String email) {
@@ -47,22 +52,31 @@ public class UtilisateurDao implements IUtilisateurDao {
     }
 
     private List<Utilisateur> getListOfUtilisateur() {
-        if (listOfUtilisateurs == null) {
-            listOfUtilisateurs = new ArrayList<Utilisateur>();
-            Utilisateur utilisateur = new Utilisateur();
-            utilisateur.setEmail("contact@aquasys.fr");
-            utilisateur.setNom("ADMIN");
-            utilisateur.setAdmin(true);
-            utilisateur.setDateCreation(new java.sql.Date(new Date().getTime()));
-            listOfUtilisateurs.add(utilisateur);
-
-            utilisateur = new Utilisateur();
-            utilisateur.setEmail("test@aquasys.fr");
-            utilisateur.setNom("TEST");
-            utilisateur.setAdmin(false);
-            utilisateur.setDateCreation(new java.sql.Date(new Date().getTime()));
-            listOfUtilisateurs.add(utilisateur);
+        List<Utilisateur> users = new ArrayList<Utilisateur>();
+        PreparedStatement p = null;
+        try {
+            p = c.prepareStatement("SELECT * FROM \"user\"");
+            ResultSet resultSet = p.executeQuery();
+            while (resultSet.next()) {
+                users.add(resultsetToUser(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return listOfUtilisateurs;
+        return users;
+    }
+
+    private Utilisateur resultsetToUser(ResultSet resultSet) {
+        Utilisateur u = new Utilisateur();
+        try {
+            u.setAdmin(resultSet.getBoolean(5));
+            u.setNom(resultSet.getString(2));
+            u.setDateCreation(resultSet.getDate(3));
+            u.setEmail(resultSet.getString(1));
+            u.setPassord(resultSet.getString(4));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return u;
     }
 }

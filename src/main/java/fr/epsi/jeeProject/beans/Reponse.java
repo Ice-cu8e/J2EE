@@ -4,11 +4,20 @@ import java.sql.Date;
 
 public class Reponse {
 
+	private int id;
 	private Blog blog;
 	private Utilisateur blogger;
 	private String commentaire;
 	private Date publication;
-	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public Blog getBlog() {
 		return blog;
 	}
