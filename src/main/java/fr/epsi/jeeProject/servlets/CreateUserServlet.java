@@ -1,5 +1,8 @@
 package fr.epsi.jeeProject.servlets;
 
+import fr.epsi.jeeProject.beans.Utilisateur;
+import fr.epsi.jeeProject.dao.IUtilisateurDao;
+import fr.epsi.jeeProject.dao.UtilisateurDao;
 import fr.epsi.jeeProject.listener.StartupListener;
 import org.apache.logging.log4j.LogManager;
 
@@ -53,42 +56,42 @@ public class CreateUserServlet extends HttpServlet {
         String secondpassword = request.getParameter("secondpassword");
         String admin=request.getParameter("radio");
         Boolean alreadyexist=false;
+        Utilisateur userExist=new Utilisateur();
+        IUtilisateurDao userDao= new UtilisateurDao();
         if(createpassword.equals(secondpassword)){
             Connection connection = getConnection();
             try {
-                PreparedStatement prep = connection.prepareStatement("SELECT * FROM jee.public.user Where email=?");
-                prep.setString(1, email);
-                ResultSet resultSet = prep.executeQuery();
-                while (resultSet.next()) {
+                userExist=userDao.getUtilisateur(email);
+                if (userExist!=null){
                     alreadyexist=true;
                 }
                 if (!alreadyexist) {
 
-                        PreparedStatement insert = connection.prepareStatement("INSERT INTO jee.public.user VALUES(?,?,?,?,?)");
-                        insert.setString(1, email);
-                        insert.setString(2, nom);
-                        java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-                        insert.setDate(3, date);
-                        insert.setString(4, createpassword);
-                        if (admin.equals("true")) {
-                            insert.setBoolean(5, true);
-                            insert.executeUpdate();
-                            insert.close();
-                            HttpSession session = request.getSession();
-                            session.setAttribute("usercreated", "Utilisateur " + email + " créé !");
-                            Logger.info("Utilisateur " + email + " créé !");
-                            RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/BlogPage.jsp");
-                            RequetsDispatcherObj.forward(request, response);
-                        } else {
-                            insert.setBoolean(5, false);
-                            insert.executeUpdate();
-                            insert.close();
-                            HttpSession session = request.getSession();
-                            session.setAttribute("usercreated", "Utilisateur " + email + " créé !");
-                            Logger.info("Utilisateur " + email + " créé !");
-                            if(admin.equals("false")){
+                        Utilisateur insertedUser=new Utilisateur();
+                        insertedUser.setEmail(email);
+                        insertedUser.setNom(nom);
+                        insertedUser.setPassord(createpassword);
+                        if (admin!=null) {
+                            if (admin.equals("true")) {
+                                insertedUser.setAdmin(true);
+                                userDao.createUtilisateur(insertedUser);
+                                HttpSession session = request.getSession();
+                                session.setAttribute("usercreated", "Utilisateur " + email + " créé !");
+                                Logger.info("Utilisateur " + email + " créé !");
                                 RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/BlogPage.jsp");
                                 RequetsDispatcherObj.forward(request, response);
+                            }
+                        } else {
+                            insertedUser.setAdmin(false);
+                            userDao.createUtilisateur(insertedUser);
+                            HttpSession session = request.getSession();
+                            session.setAttribute("usercreated", "Utilisateur " + email + " créé !");
+                            Logger.info("Utilisateur " + email + " créé !");
+                            if (admin!=null) {
+                                if (admin.equals("false")) {
+                                    RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/BlogPage.jsp");
+                                    RequetsDispatcherObj.forward(request, response);
+                                }
                             }else {
                                 RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Index.jsp");
                                 RequetsDispatcherObj.forward(request, response);
@@ -98,10 +101,13 @@ public class CreateUserServlet extends HttpServlet {
                     HttpSession session = request.getSession();
                     session.setAttribute("createuser", "Un compte existe deja avec cet email");
                     Logger.info("Création utilisateur refusé : Un compte existe deja avec cet email");
-                    if(admin.equals("false")){
-                        RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/BlogPage.jsp");
-                        RequetsDispatcherObj.forward(request, response);
-                    }else {
+                    if (admin!=null) {
+                        if(admin.equals("false")){
+                            RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/BlogPage.jsp");
+                            RequetsDispatcherObj.forward(request, response);
+                        }
+                    }
+                    else {
                         RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Index.jsp");
                         RequetsDispatcherObj.forward(request, response);
                     }
@@ -114,9 +120,11 @@ public class CreateUserServlet extends HttpServlet {
             HttpSession session=request.getSession();
             session.setAttribute("createuser","Les mots de passes ne sont pas identiques");
             Logger.info("Création utilisateur refusé : Les mots de passes ne sont pas identiques");
-            if(admin.equals("false")){
-                RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/BlogPage.jsp");
-                RequetsDispatcherObj.forward(request, response);
+            if (admin!=null) {
+                if(admin.equals("false")){
+                    RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/BlogPage.jsp");
+                    RequetsDispatcherObj.forward(request, response);
+                }
             }else {
                 RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Index.jsp");
                 RequetsDispatcherObj.forward(request, response);

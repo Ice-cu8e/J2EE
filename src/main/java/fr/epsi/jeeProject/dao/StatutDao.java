@@ -1,6 +1,7 @@
 package fr.epsi.jeeProject.dao;
 
 import fr.epsi.jeeProject.beans.Statut;
+import org.apache.logging.log4j.LogManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +14,8 @@ import static fr.epsi.jeeProject.server.PostgresServer.getConnection;
 
 public class StatutDao implements IStatutDao {
     private Connection c = getConnection();
-    private static List<Statut> listOfStatuts;
+    private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(BlogDao.class);
+
 
     @Override
     public Statut getStatut(Integer id) {
@@ -26,20 +28,18 @@ public class StatutDao implements IStatutDao {
     }
     @Override
     public List<Statut> getListOfStatuts() {
-        return getPrivateListOfStatuts();
-    }
-
-    private List<Statut> getPrivateListOfStatuts() {
         List<Statut> status = new ArrayList<Statut>();
         PreparedStatement p = null;
         try {
+            Logger.debug("Début de la requete getListOfStatuts");
             p = c.prepareStatement("SELECT * FROM statut");
             ResultSet resultSet = p.executeQuery();
             while (resultSet.next()) {
                 status.add(resultSetToStatut(resultSet));
             }
+            Logger.debug("Requete getListOfStatuts OK");
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.debug("Requete getListOfStatuts KO"+e);
         }
         return status;
     }

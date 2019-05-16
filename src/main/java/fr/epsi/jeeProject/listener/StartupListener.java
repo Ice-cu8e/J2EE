@@ -1,8 +1,11 @@
 package fr.epsi.jeeProject.listener;
 
 import fr.epsi.jeeProject.beans.Blog;
+import fr.epsi.jeeProject.beans.Utilisateur;
 import fr.epsi.jeeProject.dao.BlogDao;
 import fr.epsi.jeeProject.dao.IBlogDao;
+import fr.epsi.jeeProject.dao.IUtilisateurDao;
+import fr.epsi.jeeProject.dao.UtilisateurDao;
 import fr.epsi.jeeProject.jmx.LevelChange;
 import fr.epsi.jeeProject.jmx.NbBlogs;
 import org.apache.logging.log4j.LogManager;
@@ -60,8 +63,13 @@ public class StartupListener implements ServletContextListener {
         Connection c = getConnection();
         Logger.info("Connexion ok");
         IBlogDao blogDao=new BlogDao();
+        IUtilisateurDao userDao=new UtilisateurDao();
         Logger.error("Nombre de blogs : "+blogDao.getNbBlogs());
-        Logger.error("Nombre d'utilisateurs : ");
+        try {
+            Logger.error("Nombre d'utilisateurs : "+ userDao.getListOfUtilisateur().size());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         try {
             name = new ObjectName("fr.epsi.jeeProject:type=LevelChangeMBean");

@@ -7,6 +7,9 @@ import fr.epsi.jeeProject.beans.Utilisateur;
 import fr.epsi.jeeProject.dao.IBlogDao;
 import fr.epsi.jeeProject.dao.IStatutDao;
 import fr.epsi.jeeProject.dao.IUtilisateurDao;
+import fr.epsi.jeeProject.listener.StartupListener;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,6 +27,7 @@ public class BlogDao implements IBlogDao {
     //private IUtilisateurDao utilisateurDao = new UtilisateurDao();
     //private IStatutDao statutDao = new StatutDao();
     private Connection c = getConnection();
+    private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(BlogDao.class);
 
     @Override
     public Blog getBlog(Integer id) {
@@ -36,16 +40,19 @@ public class BlogDao implements IBlogDao {
     }
     @Override
     public List<Blog> getAllBlogs(){
+        Logger.debug("Début de la requete getAllBlogs");
         List<Blog> blogs = new ArrayList<Blog>();
         PreparedStatement p = null;
         try {
+
             p = c.prepareStatement("SELECT * FROM BLOG");
             ResultSet resultSet = p.executeQuery();
             while (resultSet.next()) {
                 blogs.add(resultSetToBlog(resultSet));
             }
+            Logger.debug("Requete getAllBlogs OK");
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.debug("Requete getAllBlogs KO :"+ e);
         }
         return blogs;
     }
@@ -71,18 +78,6 @@ public class BlogDao implements IBlogDao {
         return b;
     }
 
-    @Override
-    public List<Blog> getBlogs(Utilisateur utilisateur) {
-        List<Blog> myBlogs = new ArrayList<Blog>();
-        for (Blog b : getBlogs()) {
-            if (b.getCreateur().getEmail().equals(utilisateur.getEmail())) {
-                myBlogs.add(b);
-            } else if (b.getStatut().getId().intValue() == IStatutDao.PUBLIE) {
-                myBlogs.add(b);
-            }
-        }
-        return myBlogs;
-    }
 
     @Override
     public Integer createBlog(Blog blog) throws SQLException {

@@ -3,6 +3,7 @@ package fr.epsi.jeeProject.dao;
 import fr.epsi.jeeProject.beans.Blog;
 import fr.epsi.jeeProject.beans.Reponse;
 import fr.epsi.jeeProject.beans.Statut;
+import org.apache.logging.log4j.LogManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +16,7 @@ import static fr.epsi.jeeProject.server.PostgresServer.getConnection;
 
 public class ResponseDao {
     private Connection c = getConnection();
+    private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(BlogDao.class);
 
     //@Override
     public Reponse getResponse(Integer id, Blog blog) {
@@ -31,13 +33,15 @@ public class ResponseDao {
         List<Reponse> status = new ArrayList<Reponse>();
         PreparedStatement p = null;
         try {
+            Logger.debug("Début de la requete getResponsesBlog");
             p = c.prepareStatement("SELECT * FROM blog_commentaires WHERE blog_id = " + blog.getId());
             ResultSet resultSet = p.executeQuery();
             while (resultSet.next()) {
                 status.add(resultSetToStatut(resultSet));
             }
+            Logger.debug("Requete getResponsesBlog OK");
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.debug("Requete getResponsesBlog KO"+e);
         }
         return status;
     }

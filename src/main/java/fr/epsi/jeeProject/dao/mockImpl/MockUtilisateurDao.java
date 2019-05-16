@@ -45,8 +45,8 @@ public class MockUtilisateurDao implements IUtilisateurDao {
 			}
 		}
 	}
-
-	private List<Utilisateur> getListOfUtilisateur() {
+@Override
+	public List<Utilisateur> getListOfUtilisateur() {
 		if (listOfUtilisateurs == null) {
 			listOfUtilisateurs = new ArrayList<Utilisateur>();
 			Utilisateur utilisateur = new Utilisateur();

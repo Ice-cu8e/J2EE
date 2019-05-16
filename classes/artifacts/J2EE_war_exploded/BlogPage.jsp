@@ -1,4 +1,7 @@
-<%@ page import="fr.epsi.jeeProject.beans.Utilisateur" %><%--
+<%@ page import="fr.epsi.jeeProject.beans.Utilisateur" %>
+<%@ page import="fr.epsi.jeeProject.dao.IBlogDao" %>
+<%@ page import="fr.epsi.jeeProject.dao.IUtilisateurDao" %>
+<%@ page import="fr.epsi.jeeProject.dao.UtilisateurDao" %><%--
   Created by IntelliJ IDEA.
   User: thomas
   Date: 15/05/19
@@ -34,8 +37,8 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" data-toggle="modal" data-target="#create">Créer un utilisateur</a>
-                            <a class="dropdown-item" href="#">Modifier un utilisateur</a>
-                            <a class="dropdown-item" href="#">Supprimer un utilisateur</a>
+                            <a class="dropdown-item" data-toggle="modal" data-target="#modif">Modifier un utilisateur</a>
+                            <a class="dropdown-item" data-toggle="modal" data-target="#delete">Supprimer un utilisateur</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="Disconnection">Se déconnecter</a>
                         </div>
@@ -85,6 +88,59 @@
             </div>
         </div>
     </div>
+    <div class="modal" id="modif">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Modifier un d'utilisateur</h4>
+
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="DeleteUser" method="post">
+                        <div id="modalContent2">
+                            <SELECT name="nom" size="1">
+                                <% IUtilisateurDao myUsers=new UtilisateurDao();
+                                    for (Utilisateur aUser:myUsers.getListOfUtilisateur()) {
+                                        if(!aUser.getAdmin()){
+                                            %><option name="user" value=<%out.println(aUser.getEmail());%>> <% out.println(aUser.getEmail());
+                                        }
+                                    }
+
+                                %>
+                            </SELECT>
+                            <input required type="submit" class="" value="Supprimer l'utilisateur">
+                        </div>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="delete">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Supprimer un d'utilisateur</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <%
         String createuser= (String) session.getAttribute("createuser");
         if(createuser!=null) {
@@ -100,22 +156,6 @@
     </div>
     <%
             session.setAttribute("createuser", null);
-        } %>
-    <%
-        String connexionrefused= (String) session.getAttribute("connexionrefused");
-        if(connexionrefused!=null) {
-    %>
-    <div class="toast" style="position: absolute; top: 0; right: 0;" data-delay="1500">
-        <div class="toast-header">
-            <strong class="mr-auto text-primary">Erreur</strong>
-            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
-        </div>
-        <div class="toast-body">
-            <% out.println(session.getAttribute("connexionrefused"));%>
-        </div>
-    </div>
-    <%
-            session.setAttribute("connexionrefused", null);
         } %>
 
     <%

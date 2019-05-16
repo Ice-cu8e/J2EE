@@ -10,7 +10,6 @@ import java.util.List;
 public interface IBlogDao {
 
 	Blog getBlog(Integer id);
-	List<Blog> getBlogs(Utilisateur utilisateur);
 	Integer createBlog(Blog blog) throws SQLException;
 	void updateBlog(Blog blog) throws SQLException;
 	void deleteBlog(Blog blog) throws SQLException;
