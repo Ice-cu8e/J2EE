@@ -7,23 +7,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <link rel="stylesheet" type="text/css" href="styles/style.css">
-    <title>J2EE</title>
-</head>
-<body>
-<header class="nav">
-    <h2 class="navTitle">J2EE</h2>
-</header>
 <%
-    String ID = request.getAttribute("ID").toString();
-    Connection c = getConnection();
-    PreparedStatement p = c.prepareStatement("SELECT * FROM BLOG Where ID=?");
-    p.setInt(1,Integer.parseInt(ID));
-    ResultSet resultSet = p.executeQuery();
-    while (resultSet.next()) {
-        %>
+    Connection c = null;
+    try {
+        c = getConnection();
+        PreparedStatement prep = c.prepareStatement("SELECT * FROM BLOG");
+        ResultSet resultSet = prep.executeQuery();
+        while (resultSet.next()) {
+            %>
             <div class="card">
                 <div class="cardHeader">
                     <div class="logo" style="text-align: center">
@@ -44,6 +35,14 @@
                     </ul>
                 </div>
             </div>
-        <%
+            <%
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+            %>
+                <div class="center">
+                    <p> <% out.println("Aucunne connexion");  %> </p>
+                </div>
+            <%
     }
 %>

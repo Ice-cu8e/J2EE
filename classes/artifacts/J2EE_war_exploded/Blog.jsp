@@ -1,4 +1,5 @@
-<%@ page import="java.sql.*" %><%--
+<%@ page import="java.sql.*" %>
+<%@ page import="static fr.epsi.jeeProject.server.PostgresServer.getConnection" %><%--
   Created by IntelliJ IDEA.
   User: thomas
   Date: 27/02/19
@@ -8,32 +9,41 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <title>J2EE</title>
 </head>
 <body>
+<header class="nav">
+    <h2 class="navTitle">J2EE</h2>
+</header>
 <%
     String ID = request.getAttribute("ID").toString();
-    String title;
-    String description;
-    String email;
-    String date_creation;
-    String date_modification;
-    String statut;
-    Connection c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/JEE", "postgres", "postgres");
-    PreparedStatement prep = c.prepareStatement("SELECT * FROM BLOG Where ID=?");
-    prep.setInt(1,Integer.parseInt(ID));
-    ResultSet resultSet = prep.executeQuery();
+    Connection c = getConnection();
+    PreparedStatement p = c.prepareStatement("SELECT * FROM BLOG Where ID=?");
+    p.setInt(1,Integer.parseInt(ID));
+    ResultSet resultSet = p.executeQuery();
     while (resultSet.next()) {
-        title = resultSet.getString(2);
-        description = resultSet.getString(3);
-        email = resultSet.getString(4);
-        date_creation = resultSet.getString(5);
-        date_modification = resultSet.getString(6);
-        statut = resultSet.getString(7);
-
-%> <br>
-    <div><%out.println(title);%></div>
-    <div><%out.println(description); }%></div>
- <br>
-</body>
-</html>
+        %>
+            <div class="card">
+                <div class="cardHeader">
+                    <div class="logo" style="text-align: center">
+                        <span style="font-size: 18px;"><% out.println(resultSet.getString(1));  %></span>
+                    </div>
+                    <div class="cardTitle">
+                        <h3 style="margin: 0px"><% out.println(resultSet.getString(2));  %></h3>
+                        <h5 style="margin: 0px"><% out.println(resultSet.getString(4));  %></h5>
+                    </div>
+                </div>
+                <div>
+                    <div class="cardText">
+                        <p> <% out.println(resultSet.getString(3));  %>  </p>
+                    </div>
+                    <ul>
+                        <li> <% out.println(resultSet.getString(5));  %> </li>
+                        <li> <% out.println(resultSet.getString(6));  %> </li>
+                    </ul>
+                </div>
+            </div>
+        <%
+    }
+%>
