@@ -31,7 +31,7 @@ public class CreateUserServlet extends HttpServlet {
      */
     public CreateUserServlet() {
         super();
-
+        Logger.info("Exécution de :"+ CreateUserServlet.class);
         // TODO Auto-generated constructor stub
     }
 
@@ -40,7 +40,6 @@ public class CreateUserServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
-        Logger.info("Exécution de :"+ CreateUserServlet.class);
     }
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

@@ -19,10 +19,12 @@
 
     <title>JEE Blog projet</title>
 </head>
-<header class="nav">
-    <h2 class="navTitle">J2EE</h2>
-</header>
 <body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand">J2EE</a>
+    </nav>
+</header>
 <div id="content">
 
 <div class="wrapper fadeInDown">

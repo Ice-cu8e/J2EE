@@ -44,6 +44,12 @@ a {
     min-height: 80%;
     padding: 20px;
 }
+a.navbar-brand{
+    color:rgba(255, 255, 255,1)!important;
+}
+.navbar.navbar-expand-lg.navbar-light.bg-light{
+    background-color: #5c6bc0!important;
+}
 #modalContent{
     text-align: center;
 }

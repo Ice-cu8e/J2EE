@@ -34,9 +34,7 @@ public class BlogServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
-        String ID=request.getParameter( "ID" );
-        request.setAttribute("ID",ID);
-        RequestDispatcher RequetsDispatcherObj =request.getRequestDispatcher("/Blog.jsp");
+        RequestDispatcher RequetsDispatcherObj =request.getRequestDispatcher("/Index.jsp");
         RequetsDispatcherObj.forward(request, response);
 
     }
