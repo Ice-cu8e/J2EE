@@ -9,7 +9,7 @@ import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 
 public class LevelChange implements LevelChangeMBean {
-    private static Logger logger = LogManager.getLogger(StartupListener.class);
+    private static Logger logger = LogManager.getLogger(LevelChange.class);
 
     public String getLoggingLevel(){
         return logger.getLevel().toString() ;
