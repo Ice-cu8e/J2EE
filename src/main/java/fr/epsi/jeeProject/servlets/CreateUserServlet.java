@@ -17,6 +17,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 
+import static fr.epsi.jeeProject.server.PostgresServer.getConnection;
+
 
 /**
  * Servlet implementation class IndexServlet
@@ -49,9 +51,10 @@ public class CreateUserServlet extends HttpServlet {
         String nom = request.getParameter("nom");
         String createpassword = request.getParameter("createpassword");
         String secondpassword = request.getParameter("secondpassword");
+        String admin=request.getParameter("radio");
         Boolean alreadyexist=false;
         if(createpassword.equals(secondpassword)){
-            Connection connection = StartupListener.c;
+            Connection connection = getConnection();
             try {
                 PreparedStatement prep = connection.prepareStatement("SELECT * FROM jee.public.user Where email=?");
                 prep.setString(1, email);
@@ -59,27 +62,49 @@ public class CreateUserServlet extends HttpServlet {
                 while (resultSet.next()) {
                     alreadyexist=true;
                 }
-                if (!alreadyexist){
-                    PreparedStatement insert = connection.prepareStatement("INSERT INTO jee.public.user VALUES(?,?,?,?,?)");
-                    insert.setString(1, email);
-                    insert.setString(2, nom);
-                    java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-                    insert.setDate(3, date);
-                    insert.setString(4, createpassword);
-                    insert.setBoolean(5, false);
-                    insert.executeUpdate();
-                    insert.close();
-                    HttpSession session=request.getSession();
-                    session.setAttribute("usercreated","Utilisateur "+ email+" créé !");
-                    Logger.info("Utilisateur "+ email+" créé !");
-                    RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Index.jsp");
-                    RequetsDispatcherObj.forward(request, response);
-                }else{
-                    HttpSession session=request.getSession();
-                    session.setAttribute("createuser","Un compte existe deja avec cet email");
+                if (!alreadyexist) {
+
+                        PreparedStatement insert = connection.prepareStatement("INSERT INTO jee.public.user VALUES(?,?,?,?,?)");
+                        insert.setString(1, email);
+                        insert.setString(2, nom);
+                        java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+                        insert.setDate(3, date);
+                        insert.setString(4, createpassword);
+                        if (admin.equals("true")) {
+                            insert.setBoolean(5, true);
+                            insert.executeUpdate();
+                            insert.close();
+                            HttpSession session = request.getSession();
+                            session.setAttribute("usercreated", "Utilisateur " + email + " créé !");
+                            Logger.info("Utilisateur " + email + " créé !");
+                            RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/BlogPage.jsp");
+                            RequetsDispatcherObj.forward(request, response);
+                        } else {
+                            insert.setBoolean(5, false);
+                            insert.executeUpdate();
+                            insert.close();
+                            HttpSession session = request.getSession();
+                            session.setAttribute("usercreated", "Utilisateur " + email + " créé !");
+                            Logger.info("Utilisateur " + email + " créé !");
+                            if(admin.equals("false")){
+                                RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/BlogPage.jsp");
+                                RequetsDispatcherObj.forward(request, response);
+                            }else {
+                                RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Index.jsp");
+                                RequetsDispatcherObj.forward(request, response);
+                            }
+                    }
+                }else {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("createuser", "Un compte existe deja avec cet email");
                     Logger.info("Création utilisateur refusé : Un compte existe deja avec cet email");
-                    RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Index.jsp");
-                    RequetsDispatcherObj.forward(request, response);
+                    if(admin.equals("false")){
+                        RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/BlogPage.jsp");
+                        RequetsDispatcherObj.forward(request, response);
+                    }else {
+                        RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Index.jsp");
+                        RequetsDispatcherObj.forward(request, response);
+                    }
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -89,8 +114,13 @@ public class CreateUserServlet extends HttpServlet {
             HttpSession session=request.getSession();
             session.setAttribute("createuser","Les mots de passes ne sont pas identiques");
             Logger.info("Création utilisateur refusé : Les mots de passes ne sont pas identiques");
-            RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Index.jsp");
-            RequetsDispatcherObj.forward(request, response);
+            if(admin.equals("false")){
+                RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/BlogPage.jsp");
+                RequetsDispatcherObj.forward(request, response);
+            }else {
+                RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Index.jsp");
+                RequetsDispatcherObj.forward(request, response);
+            }
         }
     }
 }

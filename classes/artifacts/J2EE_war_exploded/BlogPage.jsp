@@ -33,7 +33,7 @@
                                 out.println(myUser.getEmail());%>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Créer un utilisateur</a>
+                            <a class="dropdown-item" data-toggle="modal" data-target="#create">Créer un utilisateur</a>
                             <a class="dropdown-item" href="#">Modifier un utilisateur</a>
                             <a class="dropdown-item" href="#">Supprimer un utilisateur</a>
                             <div class="dropdown-divider"></div>
@@ -53,5 +53,93 @@
             <div class="column sideColumn"></div>
         </div>
     </div>
+    <div class="modal" id="create">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Création d'utilisateur</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="CreateUser" method="post">
+                        <div id="modalContent">
+                            <input required type="email" id="email" class="" name="email" placeholder="Email">
+                            <input required type="text" id="nom" class="" name="nom" placeholder="Nom">
+                            <input required type="password" id="createpassword" class="" name="createpassword" placeholder="Mot de passe">
+                            <input required type="password" id="secondPassword" class="" name="secondpassword" placeholder="Retaper votre mot de passe">
+                            <p id="checkbox">Est-ce un administrateur ?</p>
+                            <label for="oui">Oui</label>
+                            <input type="radio" id="oui" class="" name="radio" value="true" >
+                            <label for="non">Non</label>
+                            <input type="radio" id="non" class="" name="radio" value="false" checked >
+                            <input required type="submit" class="" value="Créer l'utilisateur">
+                        </div>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%
+        String createuser= (String) session.getAttribute("createuser");
+        if(createuser!=null) {
+    %>
+    <div class="toast" style="position: absolute; top: 0; right: 0;" data-delay="1500">
+        <div class="toast-header">
+            <strong class="mr-auto text-primary">Erreur</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+        </div>
+        <div class="toast-body">
+            <% out.println(session.getAttribute("createuser"));%>
+        </div>
+    </div>
+    <%
+            session.setAttribute("createuser", null);
+        } %>
+    <%
+        String connexionrefused= (String) session.getAttribute("connexionrefused");
+        if(connexionrefused!=null) {
+    %>
+    <div class="toast" style="position: absolute; top: 0; right: 0;" data-delay="1500">
+        <div class="toast-header">
+            <strong class="mr-auto text-primary">Erreur</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+        </div>
+        <div class="toast-body">
+            <% out.println(session.getAttribute("connexionrefused"));%>
+        </div>
+    </div>
+    <%
+            session.setAttribute("connexionrefused", null);
+        } %>
+
+    <%
+        String usercreated= (String) session.getAttribute("usercreated");
+        if(usercreated!=null) {
+    %>
+    <div class="toast" style="position: absolute; top: 0; right: 0;" data-delay="1500">
+        <div class="toast-header">
+            <strong class="mr-auto text-primary">Réussite !</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+        </div>
+        <div class="toast-body">
+            <% out.println(session.getAttribute("usercreated"));%>
+        </div>
+    </div>
+    <%
+            session.setAttribute("usercreated", null);
+        } %>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('.toast').toast('show');
+        });
+    </script>
 </body>
 </html>

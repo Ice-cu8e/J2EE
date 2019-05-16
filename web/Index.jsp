@@ -11,7 +11,7 @@
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style type="text/css">
-        <%@ include file="styles/index.css" %>
+        <%@ include file="styles/style.css" %>
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -63,11 +63,11 @@
             <div class="modal-body">
                 <form action="CreateUser" method="post">
                     <div id="modalContent">
-                    <input required type="text" id="email" class="" name="email" placeholder="Email">
+                    <input required type="email" id="email" class="" name="email" placeholder="Email">
                     <input required type="text" id="nom" class="" name="nom" placeholder="Nom">
                     <input required type="password" id="createpassword" class="" name="createpassword" placeholder="Mot de passe">
                     <input required type="password" id="secondPassword" class="" name="secondpassword" placeholder="Retaper votre mot de passe">
-                    <input required type="submit" class="" value="Log In">
+                    <input required type="submit" class="" value="Créer l'utilisateur">
                     </div>
                 </form>
             </div>

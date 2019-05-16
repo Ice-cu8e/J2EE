@@ -11,7 +11,7 @@
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style type="text/css">
-        <%@ include file="styles/index.css" %>
+        <%@ include file="styles/style.css" %>
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -19,13 +19,14 @@
 
     <title>JEE Blog projet</title>
 </head>
-
 <body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand">J2EE</a>
+    </nav>
+</header>
+<div id="content">
 
-<!------ Include the above in your HEAD tag ---------->
-<nav class="navbar navbar-dark bg-primary">
-    <!-- Navbar content -->
-</nav>
 <div class="wrapper fadeInDown">
     <div class="formContent">
         <!-- Tabs Titles -->
@@ -36,7 +37,7 @@
         </div>
 
         <!-- Login Form -->
-        <form action="Home" method="post">
+        <form action="Blogs" method="post">
             <input type="text" id="login" class="fadeIn second" name="login" placeholder="Email">
             <input type="password" id="password" class="fadeIn third" name="password" placeholder="Mot de passe">
             <input type="submit" class="fadeIn fourth" value="Log In">
@@ -47,6 +48,7 @@
         </div>
 
     </div>
+</div>
 </div>
 <!-- The Modal -->
 <div class="modal" id="myModal">
@@ -61,11 +63,11 @@
             <div class="modal-body">
                 <form action="CreateUser" method="post">
                     <div id="modalContent">
-                    <input required type="text" id="email" class="" name="email" placeholder="Email">
+                    <input required type="email" id="email" class="" name="email" placeholder="Email">
                     <input required type="text" id="nom" class="" name="nom" placeholder="Nom">
                     <input required type="password" id="createpassword" class="" name="createpassword" placeholder="Mot de passe">
                     <input required type="password" id="secondPassword" class="" name="secondpassword" placeholder="Retaper votre mot de passe">
-                    <input required type="submit" class="" value="Log In">
+                    <input required type="submit" class="" value="Créer l'utilisateur">
                     </div>
                 </form>
             </div>
