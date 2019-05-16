@@ -45,7 +45,6 @@ a.navbar-brand{
 
 .cardHeader {
     display: flex;
-    background: #f3f3f3;
 }
 
 .cardTitle {
@@ -107,15 +106,56 @@ a.navbar-brand{
 
 .input  {
     height: 20px;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: 20px;
     border-radius: 5px;
     border: #bdbbbb;
     border-style: solid;
     border-width: 1px;
     width: 100%;
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+}
+
+.buttonSend {
+    background-color: #56baed;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    margin-left: 10px;
+    text-transform: uppercase;
+}
+
+.commentaire {
+    background: #f3f3f3;
+    box-shadow: inset 0 4px 8px 0px #dcd8d8;
+}
+
+.showMore {
+    font-weight: 900;
+    font-size: 11px;
+    color: #38b0ec;
+    margin-left: auto;
+}
+
+.comContent {
+    padding: 10px;
+    border: 0px;
+    border-bottom: 1px;
+    border-style: solid;
+    border-color: #b3b3b3;
+}
+
+.comText {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.comTextHeader {
+    font-size: 10px;
+    color: #717171;
 }
 
 @media screen and (min-width: 800px) {
