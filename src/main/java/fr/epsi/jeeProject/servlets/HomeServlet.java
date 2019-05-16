@@ -55,7 +55,7 @@ public class HomeServlet extends HttpServlet {
             Utilisateur myUser = new Utilisateur();
             Connection connection = StartupListener.c;
             try {
-                PreparedStatement prep = connection.prepareStatement("SELECT * FROM jee.public.user Where email=? and PASSWORD=?");
+                PreparedStatement prep = connection.prepareStatement("SELECT * FROM \"user\" Where email=? and password=?");
                 prep.setString(1, login);
                 prep.setString(2, password);
                 ResultSet resultSet = prep.executeQuery();

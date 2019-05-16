@@ -117,11 +117,19 @@ public class BlogDao implements IBlogDao {
     }
 
     @Override
-    public void addReponse(Blog blog, Reponse reponse) {
-        if (blog.getListOfReponses() == null) {
-            blog.setListOfReponses(new ArrayList<Reponse>());
+    public void addReponse(Reponse reponse) {
+        PreparedStatement p = null;
+        try {
+            p = c.prepareStatement("INSERT INTO blog_commentaires (commentaire, email, date_creation, blog_id) VALUES (?, ?, ?, ?)");
+            p.setString(1,reponse.getCommentaire());
+            p.setString(2,reponse.getBlogger().getEmail());
+            p.setDate(3,reponse.getPublication());
+            p.setInt(4,reponse.getBlog().getId());
+
+            p.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        blog.getListOfReponses().add(reponse);
     }
 
     @Override

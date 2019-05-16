@@ -76,9 +76,9 @@ public abstract class MockBlogDao implements IBlogDao {
 	}
 
 	@Override
-	public void addReponse(Blog blog, Reponse reponse) throws SQLException {
+	public void addReponse(Reponse reponse) throws SQLException {
 		for (Blog b : getBlogs()) {
-			if (b.getId().intValue() == blog.getId().intValue()) {
+			if (b.getId().intValue() == reponse.getBlog().getId().intValue()) {
 				if (b.getListOfReponses() == null) {
 					b.setListOfReponses(new ArrayList<Reponse>());
 				}
