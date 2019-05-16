@@ -24,7 +24,7 @@
                 </div>
                 <div class="cardTitle">
                     <h3 style="margin: 0px"><% out.println(blog.getTitre());  %></h3>
-                    <h5 style="margin: 0px"><% out.println(blog.getCreateur()); %></h5>
+                    <h5 style="margin: 0px"><% out.println(blog.getCreateur().getNom()); %></h5>
                 </div>
             </div>
             <div>

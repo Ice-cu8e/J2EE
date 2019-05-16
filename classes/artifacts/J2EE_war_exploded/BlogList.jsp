@@ -1,5 +1,9 @@
 <%@ page import="java.sql.*" %>
-<%@ page import="static fr.epsi.jeeProject.server.PostgresServer.getConnection" %><%--
+<%@ page import="static fr.epsi.jeeProject.server.PostgresServer.getConnection" %>
+<%@ page import="fr.epsi.jeeProject.beans.Blog" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="fr.epsi.jeeProject.dao.BlogDao" %><%--
   Created by IntelliJ IDEA.
   User: thomas
   Date: 27/02/19
@@ -8,41 +12,31 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    Connection c = null;
-    try {
-        c = getConnection();
-        PreparedStatement prep = c.prepareStatement("SELECT * FROM BLOG");
-        ResultSet resultSet = prep.executeQuery();
-        while (resultSet.next()) {
-            %>
-            <div class="card">
-                <div class="cardHeader">
-                    <div class="logo" style="text-align: center">
-                        <span style="font-size: 18px;"><% out.println(resultSet.getString(1));  %></span>
-                    </div>
-                    <div class="cardTitle">
-                        <h3 style="margin: 0px"><% out.println(resultSet.getString(2));  %></h3>
-                        <h5 style="margin: 0px"><% out.println(resultSet.getString(4));  %></h5>
-                    </div>
+    List<Blog> blogs = new ArrayList<Blog>();
+    BlogDao blogDao = new BlogDao();
+    blogs = blogDao.getAllBlogs();
+    for (Blog blog: blogs) {
+        %>
+        <div class="card">
+            <div class="cardHeader">
+                <div class="logo" style="text-align: center">
+                    <span style="font-size: 18px;"><% out.println(blog.getId()); %></span>
                 </div>
-                <div>
-                    <div class="cardText">
-                        <p> <% out.println(resultSet.getString(3));  %>  </p>
-                    </div>
-                    <ul>
-                        <li> <% out.println(resultSet.getString(5));  %> </li>
-                        <li> <% out.println(resultSet.getString(6));  %> </li>
-                    </ul>
+                <div class="cardTitle">
+                    <h3 style="margin: 0px"><% out.println(blog.getTitre());  %></h3>
+                    <h5 style="margin: 0px"><% out.println(blog.getCreateur().getNom()); %></h5>
                 </div>
             </div>
-            <%
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-            %>
-                <div class="center">
-                    <p> <% out.println("Aucunne connexion");  %> </p>
+            <div>
+                <div class="cardText">
+                    <p> <% out.println(blog.getDescription()); %>  </p>
                 </div>
-            <%
+                <ul>
+                    <li> Date de création : <% out.println(blog.getDateCreation());  %> </li>
+                    <li> Date de modification : <% out.println(blog.getDateModification());  %> </li>
+                </ul>
+            </div>
+        </div>
+        <%
     }
 %>

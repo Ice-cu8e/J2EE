@@ -2,6 +2,7 @@ package fr.epsi.jeeProject.dao;
 
 import fr.epsi.jeeProject.beans.Blog;
 import fr.epsi.jeeProject.beans.Reponse;
+import fr.epsi.jeeProject.beans.Statut;
 import fr.epsi.jeeProject.beans.Utilisateur;
 import fr.epsi.jeeProject.dao.IBlogDao;
 import fr.epsi.jeeProject.dao.IStatutDao;
@@ -19,7 +20,6 @@ import static fr.epsi.jeeProject.listener.StartupListener.c;
 import static fr.epsi.jeeProject.server.PostgresServer.getConnection;
 
 public class BlogDao implements IBlogDao {
-
     private static List<Blog> listOfBlogs;
     private IUtilisateurDao utilisateurDao = new UtilisateurDao();
     private IStatutDao statutDao = new StatutDao();
@@ -52,14 +52,17 @@ public class BlogDao implements IBlogDao {
 
     private Blog resultSetToBlog(ResultSet resultSet) {
         Blog b = new Blog();
+        StatutDao s = new StatutDao();
+        UtilisateurDao u = new UtilisateurDao();
+
         try {
             b.setId(resultSet.getInt(1));
             b.setDateModification(resultSet.getDate(6));
-            b.setDescription(resultSet.getString(4));
+            b.setDescription(resultSet.getString(3));
             b.setTitre(resultSet.getString(2));
-            b.setCreateur(null);
+            b.setCreateur(u.getUtilisateur(resultSet.getString(4)));
             b.setDateCreation(resultSet.getDate(5));
-            b.setStatut(null);
+            b.setStatut(s.getStatut(resultSet.getInt(7)));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -114,16 +117,18 @@ public class BlogDao implements IBlogDao {
     }
 
     @Override
-    public void addReponse(Blog blog, Reponse reponse) throws SQLException {
-        for (Blog b : getBlogs()) {
-            if (b.getId().intValue() == blog.getId().intValue()) {
-                if (b.getListOfReponses() == null) {
-                    b.setListOfReponses(new ArrayList<Reponse>());
-                }
-                b.getListOfReponses().add(reponse);
-                return;
-            }
+    public void addReponse(Blog blog, Reponse reponse) {
+        if (blog.getListOfReponses() == null) {
+            blog.setListOfReponses(new ArrayList<Reponse>());
         }
+        blog.getListOfReponses().add(reponse);
+    }
+
+    @Override
+    public List<Reponse> getResponses(Blog blog) {
+        ResponseDao r = new ResponseDao();
+        List<Reponse> reponses = r.getResponsesBlog(blog);
+        return reponses;
     }
 
     private List<Blog> getBlogs() {

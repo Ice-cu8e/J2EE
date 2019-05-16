@@ -1,17 +1,18 @@
 package fr.epsi.jeeProject.dao;
 
-import fr.epsi.jeeProject.beans.Blog;
-import fr.epsi.jeeProject.beans.Reponse;
 import fr.epsi.jeeProject.beans.Statut;
-import fr.epsi.jeeProject.beans.Utilisateur;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class StatutDao implements IStatutDao {
+import static fr.epsi.jeeProject.server.PostgresServer.getConnection;
 
+public class StatutDao implements IStatutDao {
+    private Connection c = getConnection();
     private static List<Statut> listOfStatuts;
 
     @Override
@@ -29,29 +30,29 @@ public class StatutDao implements IStatutDao {
     }
 
     private List<Statut> getPrivateListOfStatuts() {
-        if (listOfStatuts == null) {
-            listOfStatuts = new ArrayList<Statut>();
-            Statut statut = new Statut();
-            statut.setId(1);
-            statut.setDescription("Temporaire");
-            listOfStatuts.add(statut);
-
-            statut = new Statut();
-            statut.setId(2);
-            statut.setDescription("Publi�");
-            listOfStatuts.add(statut);
-
-            statut = new Statut();
-            statut.setId(3);
-            statut.setDescription("Archiv�");
-            listOfStatuts.add(statut);
-
-            statut = new Statut();
-            statut.setId(4);
-            statut.setDescription("Annul�");
-            listOfStatuts.add(statut);
-
+        List<Statut> status = new ArrayList<Statut>();
+        PreparedStatement p = null;
+        try {
+            p = c.prepareStatement("SELECT * FROM statut");
+            ResultSet resultSet = p.executeQuery();
+            while (resultSet.next()) {
+                status.add(resultSetToStatut(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return listOfStatuts;
+        return status;
+    }
+
+    private Statut resultSetToStatut(ResultSet resultSet) {
+        Statut statut = new Statut();
+
+        try {
+            statut.setId(resultSet.getInt(1));
+            statut.setDescription(resultSet.getString(2));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return statut;
     }
 }
