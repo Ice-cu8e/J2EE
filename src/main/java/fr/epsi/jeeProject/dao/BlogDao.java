@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -80,16 +81,22 @@ public class BlogDao implements IBlogDao {
 
 
     @Override
-    public Integer createBlog(Blog blog) throws SQLException {
-        int max = 0;
-        for (Blog b : getBlogs()) {
-            if (b.getId().intValue() > max) {
-                max = b.getId();
-            }
+    public void createBlog(Blog blog) throws SQLException {
+        try {
+            PreparedStatement insert = c.prepareStatement("INSERT INTO jee.public.blog VALUES(?,?,?,?,?,?,?)");
+            insert.setInt(1, blog.getId());
+            insert.setString(2, blog.getTitre());
+            insert.setString(3,blog.getDescription());
+            insert.setString(4, blog.getCreateur().getEmail());
+            java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+            insert.setDate(5, date);
+            insert.setDate(6, date);
+            insert.setInt(7,blog.getStatut().getId());
+            insert.executeUpdate();
+            insert.close();
+        }catch (SQLException e){
+
         }
-        max+=1;
-        blog.setId(max);
-        return max;
     }
 
     @Override
@@ -117,8 +124,10 @@ public class BlogDao implements IBlogDao {
         }
     }
     @Override
-    public void deleteBlogFromId(int id) throws SQLException {
-        deleteBlog(getBlog(id));
+    public void deleteBlogFromId(int id,Utilisateur user) throws SQLException {
+        if (user.getEmail().equals(getBlog(id).getCreateur().getEmail())){
+            deleteBlog(getBlog(id));
+        }
     }
     @Override
     public void addReponse(Reponse reponse) {

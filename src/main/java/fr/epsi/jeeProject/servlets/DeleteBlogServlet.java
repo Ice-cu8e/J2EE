@@ -1,5 +1,6 @@
 package fr.epsi.jeeProject.servlets;
 
+import fr.epsi.jeeProject.beans.Utilisateur;
 import fr.epsi.jeeProject.dao.BlogDao;
 import fr.epsi.jeeProject.dao.IBlogDao;
 import fr.epsi.jeeProject.dao.IUtilisateurDao;
@@ -40,8 +41,10 @@ public class DeleteBlogServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int ID = Integer.parseInt(request.getParameter("ID"));
         IBlogDao blogDao=new BlogDao();
+        HttpSession session=request.getSession();
+        Utilisateur myUser=(Utilisateur)session.getAttribute("myUser");
         try {
-            blogDao.deleteBlogFromId(ID);
+            blogDao.deleteBlogFromId(ID,myUser);
             Logger.info("Blog n°"+ID+" supprimé");
         } catch (SQLException e) {
             Logger.error("Erreur suppression blog n°"+ID+" : "+e);
