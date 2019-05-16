@@ -1,5 +1,10 @@
 <%@ page import="java.sql.*" %>
-<%@ page import="static fr.epsi.jeeProject.server.PostgresServer.getConnection" %><%--
+<%@ page import="static fr.epsi.jeeProject.server.PostgresServer.getConnection" %>
+<%@ page import="fr.epsi.jeeProject.beans.Blog" %>
+<%@ page import="fr.epsi.jeeProject.dao.BlogDao" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<%@ page import="fr.epsi.jeeProject.beans.Reponse" %><%--
   Created by IntelliJ IDEA.
   User: thomas
   Date: 27/02/19
@@ -24,29 +29,52 @@
     PreparedStatement p = c.prepareStatement("SELECT * FROM BLOG Where ID=?");
     p.setInt(1,Integer.parseInt(ID));
 
-    ResultSet resultSet = p.executeQuery();
-    while (resultSet.next()) {
+    Blog blog = new Blog();
+    BlogDao blogDao = new BlogDao();
+    blog = blogDao.getBlog(Integer.parseInt(ID));
+
         %>
-            <div class="card">
-                <div class="cardHeader">
-                    <div class="logo" style="text-align: center">
-                        <span style="font-size: 18px;"><% out.println(resultSet.getString(1));  %></span>
-                    </div>
-                    <div class="cardTitle">
-                        <h3 style="margin: 0px"><% out.println(resultSet.getString(2));  %></h3>
-                        <h5 style="margin: 0px"><% out.println(resultSet.getString(4));  %></h5>
-                    </div>
+        <div class="card">
+            <div class="cardHeader">
+                <div class="logo" style="text-align: center">
+                    <span style="font-size: 18px;"><% out.println(blog.getId()); %></span>
                 </div>
-                <div>
-                    <div class="cardText">
-                        <p> <% out.println(resultSet.getString(3));  %>  </p>
-                    </div>
-                    <ul>
-                        <li> <% out.println(resultSet.getString(5));  %> </li>
-                        <li> <% out.println(resultSet.getString(6));  %> </li>
-                    </ul>
+                <div class="cardTitle">
+                    <h3 style="margin: 0px"><% out.println(blog.getTitre());  %></h3>
+                    <h5 style="margin: 0px"><% out.println(blog.getCreateur().getNom()); %></h5>
                 </div>
             </div>
-        <%
-    }
+            <div>
+                <div class="cardText">
+                    <p> <% out.println(blog.getDescription()); %>  </p>
+                </div>
+                <ul>
+                    <li> Date de création : <% out.println(blog.getDateCreation());  %> </li>
+                    <li> Date de modification : <% out.println(blog.getDateModification());  %> </li>
+                </ul>
+            </div>
+            <div class="commentaire">
+                <%
+                    for (Reponse reponse: blogDao.getResponses(blog)) {
+                %>
+                <div class="comContent">
+                    <div style="display: flex">
+                        <p class="comText comTextHeader"><% out.println(reponse.getBlogger().getNom());  %></p>
+                        <p class="comText comTextHeader
+                                    " style="margin-left: auto"><% out.println(reponse.getPublication());  %></p>
+                    </div>
+                    <p class="comText"><% out.println(reponse.getCommentaire());  %></p>
+                </div>
+                <%
+                    }
+                %>
+                <div>
+                    <div style="padding:8px; display: flex">
+                        <input class="input" type="text" placeholder="Votre commentaire">
+                        <button class="buttonSend">Envoyer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <%
 %>

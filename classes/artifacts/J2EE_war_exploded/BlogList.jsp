@@ -1,9 +1,10 @@
-<%@ page import="java.sql.*" %>
-<%@ page import="static fr.epsi.jeeProject.server.PostgresServer.getConnection" %>
 <%@ page import="fr.epsi.jeeProject.beans.Blog" %>
-<%@ page import="java.util.List" %>
+<%@ page import="static fr.epsi.jeeProject.server.PostgresServer.getConnection" %>
+<%@ page import="fr.epsi.jeeProject.dao.BlogDao" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="fr.epsi.jeeProject.dao.BlogDao" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="fr.epsi.jeeProject.beans.Reponse" %>
+<%--
   Created by IntelliJ IDEA.
   User: thomas
   Date: 27/02/19
@@ -35,6 +36,32 @@
                     <li> Date de création : <% out.println(blog.getDateCreation());  %> </li>
                     <li> Date de modification : <% out.println(blog.getDateModification());  %> </li>
                 </ul>
+            </div>
+            <div class="commentaire">
+                <div class="comContent" style="border-bottom: 0px; display: flex">
+                    <a class="comText showMore" href="<%=request.getContextPath()+"/Blog?ID=" + blog.getId()%>">Voir plus</a>
+                </div>
+                <%
+                    blogDao.getResponses(blog);
+                    Reponse reponse = blogDao.getResponses(blog).get(0);
+                %>
+                    <div class="comContent">
+                        <div style="display: flex">
+                            <p class="comText comTextHeader"><% out.println(reponse.getBlogger().getNom());  %></p>
+                            <p class="comText comTextHeader
+                            " style="margin-left: auto"><% out.println(reponse.getPublication());  %></p>
+                        </div>
+                        <p class="comText"><% out.println(reponse.getCommentaire());  %></p>
+                    </div>
+                <%
+
+                %>
+                <div>
+                    <div style="padding:8px; display: flex">
+                        <input class="input" type="text" placeholder="Votre commentaire">
+                        <button class="buttonSend">Envoyer</button>
+                    </div>
+                </div>
             </div>
         </div>
         <%
