@@ -40,7 +40,7 @@ public class CreateUserServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
-
+        Logger.info("Exécution de :"+ CreateUserServlet.class);
     }
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

@@ -31,8 +31,7 @@ public class HomeServlet extends HttpServlet {
      */
     public HomeServlet() {
         super();
-
-        // TODO Auto-generated constructor stub
+        Logger.info("Exécution de :"+ HomeServlet.class);
     }
 
     /**
@@ -74,7 +73,7 @@ public class HomeServlet extends HttpServlet {
                 RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Home.jsp");
                 RequetsDispatcherObj.forward(request, response);
             } else {
-                Logger.info("Connexion refusé");
+                Logger.error("Connexion refusé de : "+login);
                 session.setAttribute("connexionrefused","Connexion refusé, identifiant ou mot de passe invalide");
                 RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Index.jsp");
                 RequetsDispatcherObj.forward(request, response);

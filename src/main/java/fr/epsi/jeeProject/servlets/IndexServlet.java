@@ -27,7 +27,7 @@ public class IndexServlet extends HttpServlet {
      */
     public IndexServlet() {
         super();
-
+        Logger.info("Exécution de :"+ IndexServlet.class);
         // TODO Auto-generated constructor stub
     }
 
@@ -39,6 +39,7 @@ public class IndexServlet extends HttpServlet {
         HttpSession session=request.getSession();
         Logger.debug(session.getAttribute("myUser"));
         if(!(session.getAttribute("myUser")==null)){
+            Logger.info("Utilisateur déja connecté ");
             RequestDispatcher RequetsDispatcherObj =request.getRequestDispatcher("/Home.jsp");
             RequetsDispatcherObj.forward(request, response);
         }

@@ -18,14 +18,14 @@ import java.io.IOException;
 @WebServlet(value = "/testLog", name = "testLogServlet")
 public class testLogServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(StartupListener.class);
+	private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(testLogServlet.class);
 
     /**
      * @see HttpServlet#HttpServlet()
      */
     public testLogServlet() {
         super();
-		// TODO Auto-generated constructor stub
+		Logger.info("Exécution de :"+ testLogServlet.class);
     }
 
 	/**

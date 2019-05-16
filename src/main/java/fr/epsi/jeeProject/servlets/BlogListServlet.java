@@ -17,14 +17,14 @@ import java.io.IOException;
 @WebServlet(value = "/BlogList", name = "BlogListServlet")
 public class BlogListServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(StartupListener.class);
+    private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(BlogListServlet.class);
 
     /**
      * @see HttpServlet#HttpServlet()
      */
     public BlogListServlet() {
         super();
-
+        Logger.info("Exécution de :"+ BlogListServlet.class);
         // TODO Auto-generated constructor stub
     }
 
