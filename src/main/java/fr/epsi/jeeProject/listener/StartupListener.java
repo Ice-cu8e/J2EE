@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import static fr.epsi.jeeProject.server.PostgresServer.getConnection;
 import static java.lang.System.out;
 
 @WebListener()
@@ -64,17 +65,13 @@ public class StartupListener implements ServletContextListener {
         //Test de la connextion a hqsql
         try {
             Class.forName("org.postgresql.Driver" );
-            Logger.info("Driver postgresql et connexion ok");
+            Logger.info("Driver postgresql ok");
         } catch (Exception e) {
             Logger.error("Erreur de driver", e);
         }
 
-        try {
-            c = DriverManager.getConnection("jdbc:postgresql://51.158.111.171:5432/jee", "profjee", "Passw0rdProfJEE");
-            Logger.info("Connexion ok");
-        } catch (SQLException e) {
-            Logger.error("Error while connecting", e);
-        }
+        Connection c = getConnection();
+        Logger.info("Connexion ok");
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
