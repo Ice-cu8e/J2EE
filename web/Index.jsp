@@ -19,13 +19,12 @@
 
     <title>JEE Blog projet</title>
 </head>
-
+<header class="nav">
+    <h2 class="navTitle">J2EE</h2>
+</header>
 <body>
+<div id="content">
 
-<!------ Include the above in your HEAD tag ---------->
-<nav class="navbar navbar-dark bg-primary">
-    <!-- Navbar content -->
-</nav>
 <div class="wrapper fadeInDown">
     <div class="formContent">
         <!-- Tabs Titles -->
@@ -36,7 +35,7 @@
         </div>
 
         <!-- Login Form -->
-        <form action="Home" method="post">
+        <form action="Blogs" method="post">
             <input type="text" id="login" class="fadeIn second" name="login" placeholder="Email">
             <input type="password" id="password" class="fadeIn third" name="password" placeholder="Mot de passe">
             <input type="submit" class="fadeIn fourth" value="Log In">
@@ -47,6 +46,7 @@
         </div>
 
     </div>
+</div>
 </div>
 <!-- The Modal -->
 <div class="modal" id="myModal">

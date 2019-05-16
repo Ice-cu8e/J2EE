@@ -1,6 +1,10 @@
 package fr.epsi.jeeProject.listener;
 
+import fr.epsi.jeeProject.beans.Blog;
+import fr.epsi.jeeProject.dao.BlogDao;
+import fr.epsi.jeeProject.dao.IBlogDao;
 import fr.epsi.jeeProject.jmx.LevelChange;
+import fr.epsi.jeeProject.jmx.NbBlogs;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,24 +39,7 @@ public class StartupListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
         ObjectName name = null;
-
-        try {
-            name = new ObjectName("fr.epsi.jeeProject:type=LevelChangeMBean");
-            LevelChange mbean = new LevelChange();
-
-            mbs.registerMBean(mbean, name);
-
-        } catch (MalformedObjectNameException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        } catch (NotCompliantMBeanException e) {
-            e.printStackTrace();
-        } catch (InstanceAlreadyExistsException e) {
-            e.printStackTrace();
-        } catch (MBeanRegistrationException e) {
-            e.printStackTrace();
-        }
+        ObjectName name2 = null;
 
         Logger.trace("msg de trace");
         Logger.debug("msg de debogage");
@@ -72,6 +59,30 @@ public class StartupListener implements ServletContextListener {
 
         Connection c = getConnection();
         Logger.info("Connexion ok");
+        IBlogDao blogDao=new BlogDao();
+        Logger.error("Nombre de blogs : "+blogDao.getNbBlogs());
+        Logger.error("Nombre d'utilisateurs : ");
+
+        try {
+            name = new ObjectName("fr.epsi.jeeProject:type=LevelChangeMBean");
+            LevelChange mbean = new LevelChange();
+
+            mbs.registerMBean(mbean, name);
+            name2 = new ObjectName("fr.epsi.jeeProject:type=NbBlogsMBean");
+            NbBlogs mbean2 = new NbBlogs();
+
+            mbs.registerMBean(mbean2, name2);
+        } catch (MalformedObjectNameException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (NotCompliantMBeanException e) {
+            e.printStackTrace();
+        } catch (InstanceAlreadyExistsException e) {
+            e.printStackTrace();
+        } catch (MBeanRegistrationException e) {
+            e.printStackTrace();
+        }
     }
 
     public void contextDestroyed(ServletContextEvent sce) {

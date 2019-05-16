@@ -7,3 +7,5 @@ classes/
 target/
 
 J2EE\.iml
+
+*.class

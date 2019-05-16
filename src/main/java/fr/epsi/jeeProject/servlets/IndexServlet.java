@@ -40,7 +40,7 @@ public class IndexServlet extends HttpServlet {
         Logger.debug(session.getAttribute("myUser"));
         if(!(session.getAttribute("myUser")==null)){
             Logger.info("Utilisateur déja connecté ");
-            RequestDispatcher RequetsDispatcherObj =request.getRequestDispatcher("/Home.jsp");
+            RequestDispatcher RequetsDispatcherObj =request.getRequestDispatcher("/BlogPage.jsp");
             RequetsDispatcherObj.forward(request, response);
         }
         else{

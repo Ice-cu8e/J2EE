@@ -70,14 +70,13 @@ public class HomeServlet extends HttpServlet {
             }
             if (!(myUser.getEmail() == null)) {
                 session.setAttribute("myUser", myUser);
-                RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Home.jsp");
+                RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Blogs.jsp");
                 RequetsDispatcherObj.forward(request, response);
             } else {
                 Logger.error("Connexion refusé de : "+login);
                 session.setAttribute("connexionrefused","Connexion refusé, identifiant ou mot de passe invalide");
                 RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Index.jsp");
                 RequetsDispatcherObj.forward(request, response);
-
             }
     }
 }

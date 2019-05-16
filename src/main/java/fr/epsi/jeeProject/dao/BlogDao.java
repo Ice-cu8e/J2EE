@@ -21,8 +21,8 @@ import static fr.epsi.jeeProject.server.PostgresServer.getConnection;
 public class BlogDao implements IBlogDao {
 
     private static List<Blog> listOfBlogs;
-    private IUtilisateurDao utilisateurDao = new UtilisateurDao();
-    private IStatutDao statutDao = new StatutDao();
+    //private IUtilisateurDao utilisateurDao = new UtilisateurDao();
+    //private IStatutDao statutDao = new StatutDao();
     private Connection c = getConnection();
 
     @Override
@@ -49,7 +49,9 @@ public class BlogDao implements IBlogDao {
         }
         return blogs;
     }
-
+    public int getNbBlogs(){
+        return getAllBlogs().size();
+    }
     private Blog resultSetToBlog(ResultSet resultSet) {
         Blog b = new Blog();
         try {
