@@ -3,18 +3,16 @@ package fr.epsi.jeeProject.dao;
 import fr.epsi.jeeProject.beans.Utilisateur;
 import org.apache.logging.log4j.LogManager;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
-import static fr.epsi.jeeProject.server.PostgresServer.getConnection;
+import static fr.epsi.jeeProject.listener.StartupListener.connection;
 
 public class UtilisateurDao implements IUtilisateurDao {
-    private Connection c = getConnection();
     private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(BlogDao.class);
 
     @Override
@@ -78,8 +76,7 @@ public class UtilisateurDao implements IUtilisateurDao {
         List<Utilisateur> users = new ArrayList<Utilisateur>();
         PreparedStatement p = null;
         try {
-            Logger.debug("Début de la requete getListOfUtilisateur");
-            p = c.prepareStatement("SELECT * FROM \"user\"");
+            p = connection.prepareStatement("SELECT * FROM \"user\"");
             ResultSet resultSet = p.executeQuery();
             while (resultSet.next()) {
                 users.add(resultsetToUser(resultSet));

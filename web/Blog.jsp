@@ -1,5 +1,5 @@
 <%@ page import="java.sql.*" %>
-<%@ page import="static fr.epsi.jeeProject.server.PostgresServer.getConnection" %>
+<%@ page import="static fr.epsi.jeeProject.server.PostgresServer.connection" %>
 <%@ page import="fr.epsi.jeeProject.beans.Blog" %>
 <%@ page import="fr.epsi.jeeProject.dao.BlogDao" %>
 <%@ page import="java.util.ArrayList" %>

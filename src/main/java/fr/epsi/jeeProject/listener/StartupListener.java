@@ -7,7 +7,6 @@ import fr.epsi.jeeProject.dao.IBlogDao;
 import fr.epsi.jeeProject.dao.IUtilisateurDao;
 import fr.epsi.jeeProject.dao.UtilisateurDao;
 import fr.epsi.jeeProject.jmx.LevelChange;
-import fr.epsi.jeeProject.jmx.NbBlogs;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,15 +18,13 @@ import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionEvent;
 import java.lang.management.ManagementFactory;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import static fr.epsi.jeeProject.server.PostgresServer.getConnection;
 import static java.lang.System.out;
 
 @WebListener()
 public class StartupListener implements ServletContextListener {
-    public static Connection c;
+    public static Connection connection;
     private static final Logger Logger = LogManager.getLogger(StartupListener.class);
 
     // this will force a reconfiguration
@@ -52,13 +49,14 @@ public class StartupListener implements ServletContextListener {
         Logger.fatal("msg d'erreur fatale");
         Logger.info("Démarrage de l'application");
 
-        //Test de la connextion a hqsql
         try {
             Class.forName("org.postgresql.Driver" );
             Logger.info("Driver postgresql ok");
         } catch (Exception e) {
             Logger.error("Erreur de driver", e);
         }
+        PostgresServer postgresServer = new PostgresServer();
+        connection = PostgresServer.connection;
 
         Connection c = getConnection();
         Logger.info("Connexion ok");

@@ -2,16 +2,11 @@ package fr.epsi.jeeProject.dao;
 
 import fr.epsi.jeeProject.beans.Blog;
 import fr.epsi.jeeProject.beans.Reponse;
-import fr.epsi.jeeProject.beans.Statut;
 import fr.epsi.jeeProject.beans.Utilisateur;
 import fr.epsi.jeeProject.dao.IBlogDao;
 import fr.epsi.jeeProject.dao.IStatutDao;
 import fr.epsi.jeeProject.dao.IUtilisateurDao;
-import fr.epsi.jeeProject.listener.StartupListener;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,15 +14,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import static fr.epsi.jeeProject.listener.StartupListener.c;
-import static fr.epsi.jeeProject.server.PostgresServer.getConnection;
+import static fr.epsi.jeeProject.listener.StartupListener.connection;
 
 public class BlogDao implements IBlogDao {
     private static List<Blog> listOfBlogs;
-    //private IUtilisateurDao utilisateurDao = new UtilisateurDao();
-    //private IStatutDao statutDao = new StatutDao();
-    private Connection c = getConnection();
     private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(BlogDao.class);
 
     @Override
@@ -45,8 +35,7 @@ public class BlogDao implements IBlogDao {
         List<Blog> blogs = new ArrayList<Blog>();
         PreparedStatement p = null;
         try {
-
-            p = c.prepareStatement("SELECT * FROM BLOG");
+            p = connection.prepareStatement("SELECT * FROM BLOG");
             ResultSet resultSet = p.executeQuery();
             while (resultSet.next()) {
                 blogs.add(resultSetToBlog(resultSet));
@@ -133,7 +122,7 @@ public class BlogDao implements IBlogDao {
     public void addReponse(Reponse reponse) {
         PreparedStatement p = null;
         try {
-            p = c.prepareStatement("INSERT INTO blog_commentaires (commentaire, email, date_creation, blog_id) VALUES (?, ?, ?, ?)");
+            p = connection.prepareStatement("INSERT INTO blog_commentaires (commentaire, email, date_creation, blog_id) VALUES (?, ?, ?, ?)");
             p.setString(1,reponse.getCommentaire());
             p.setString(2,reponse.getBlogger().getEmail());
             p.setDate(3,reponse.getPublication());

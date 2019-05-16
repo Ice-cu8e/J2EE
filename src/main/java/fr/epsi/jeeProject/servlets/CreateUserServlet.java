@@ -20,7 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 
-import static fr.epsi.jeeProject.server.PostgresServer.getConnection;
+import static fr.epsi.jeeProject.listener.StartupListener.connection;
 
 
 /**
@@ -59,7 +59,7 @@ public class CreateUserServlet extends HttpServlet {
         Utilisateur userExist=new Utilisateur();
         IUtilisateurDao userDao= new UtilisateurDao();
         if(createpassword.equals(secondpassword)){
-            Connection connection = getConnection();
+            Connection connection = StartupListener.c;
             try {
                 userExist=userDao.getUtilisateur(email);
                 if (userExist!=null){

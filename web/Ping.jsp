@@ -19,13 +19,12 @@
 
         // some usefull server work here
         List<Utilisateur> lesUsers = new ArrayList<>();
-        Connection c = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost:9003", "SA", "");
 
         out.println("Liste des utilisateurs");
         %> <br> <%
 
         try {
-            Statement stmt = c.createStatement();
+            Statement stmt = connection.createStatement();
             //PreparedStatement prep = c.prepareStatement("SELECT * FROM USERS");
             ResultSet resultSet = stmt.executeQuery("SELECT * FROM Users");
             //ResultSet resultSet = prep.executeQuery();

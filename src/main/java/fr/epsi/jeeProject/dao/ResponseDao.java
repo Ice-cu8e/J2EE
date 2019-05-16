@@ -12,10 +12,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static fr.epsi.jeeProject.server.PostgresServer.getConnection;
+import static fr.epsi.jeeProject.listener.StartupListener.connection;
 
 public class ResponseDao {
-    private Connection c = getConnection();
     private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(BlogDao.class);
 
     //@Override
@@ -33,8 +32,7 @@ public class ResponseDao {
         List<Reponse> status = new ArrayList<Reponse>();
         PreparedStatement p = null;
         try {
-            Logger.debug("Début de la requete getResponsesBlog");
-            p = c.prepareStatement("SELECT * FROM blog_commentaires WHERE blog_id = " + blog.getId());
+            p = connection.prepareStatement("SELECT * FROM blog_commentaires WHERE blog_id = " + blog.getId());
             ResultSet resultSet = p.executeQuery();
             while (resultSet.next()) {
                 status.add(resultSetToStatut(resultSet));
