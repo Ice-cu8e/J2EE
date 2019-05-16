@@ -1,21 +1,16 @@
 package fr.epsi.jeeProject.dao;
 
-import fr.epsi.jeeProject.beans.Blog;
-import fr.epsi.jeeProject.beans.Reponse;
 import fr.epsi.jeeProject.beans.Utilisateur;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import static fr.epsi.jeeProject.server.PostgresServer.getConnection;
+import static fr.epsi.jeeProject.listener.StartupListener.connection;
 
 public class UtilisateurDao implements IUtilisateurDao {
-    private Connection c = getConnection();
 
     @Override
     public Utilisateur getUtilisateur(String email) {
@@ -55,7 +50,7 @@ public class UtilisateurDao implements IUtilisateurDao {
         List<Utilisateur> users = new ArrayList<Utilisateur>();
         PreparedStatement p = null;
         try {
-            p = c.prepareStatement("SELECT * FROM \"user\"");
+            p = connection.prepareStatement("SELECT * FROM \"user\"");
             ResultSet resultSet = p.executeQuery();
             while (resultSet.next()) {
                 users.add(resultsetToUser(resultSet));

@@ -17,6 +17,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 
+import static fr.epsi.jeeProject.listener.StartupListener.connection;
+
 
 /**
  * Servlet implementation class IndexServlet
@@ -52,7 +54,6 @@ public class CreateUserServlet extends HttpServlet {
         String secondpassword = request.getParameter("secondpassword");
         Boolean alreadyexist=false;
         if(createpassword.equals(secondpassword)){
-            Connection connection = StartupListener.c;
             try {
                 PreparedStatement prep = connection.prepareStatement("SELECT * FROM jee.public.user Where email=?");
                 prep.setString(1, email);

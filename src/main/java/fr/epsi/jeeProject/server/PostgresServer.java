@@ -5,14 +5,17 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class PostgresServer {
-    static public Connection dbConn;
+    public static Connection connection;
 
-    static public Connection getConnection() {
+    private void initialize() {
         try {
-            dbConn = DriverManager.getConnection("jdbc:postgresql://51.158.111.171:5432/jee", "profjee", "Passw0rdProfJEE");
+            connection = DriverManager.getConnection("jdbc:postgresql://51.158.111.171:5432/jee", "profjee", "Passw0rdProfJEE");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return dbConn;
+    }
+
+    public PostgresServer() {
+        initialize();
     }
 }

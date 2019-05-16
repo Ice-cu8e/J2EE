@@ -17,6 +17,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static fr.epsi.jeeProject.listener.StartupListener.connection;
+
 
 /**
  * Servlet implementation class HomeServlet
@@ -53,7 +55,6 @@ public class HomeServlet extends HttpServlet {
             String login = request.getParameter("login");
             String password = request.getParameter("password");
             Utilisateur myUser = new Utilisateur();
-            Connection connection = StartupListener.c;
             try {
                 PreparedStatement prep = connection.prepareStatement("SELECT * FROM \"user\" Where email=? and password=?");
                 prep.setString(1, login);

@@ -9,11 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static fr.epsi.jeeProject.server.PostgresServer.getConnection;
+import static fr.epsi.jeeProject.listener.StartupListener.connection;
 
 public class StatutDao implements IStatutDao {
-    private Connection c = getConnection();
-    private static List<Statut> listOfStatuts;
 
     @Override
     public Statut getStatut(Integer id) {
@@ -33,7 +31,7 @@ public class StatutDao implements IStatutDao {
         List<Statut> status = new ArrayList<Statut>();
         PreparedStatement p = null;
         try {
-            p = c.prepareStatement("SELECT * FROM statut");
+            p = connection.prepareStatement("SELECT * FROM statut");
             ResultSet resultSet = p.executeQuery();
             while (resultSet.next()) {
                 status.add(resultSetToStatut(resultSet));
