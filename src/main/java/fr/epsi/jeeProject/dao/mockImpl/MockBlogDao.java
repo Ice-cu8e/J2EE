@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MockBlogDao implements IBlogDao {
+public abstract class MockBlogDao implements IBlogDao {
 
 	private static List<Blog> listOfBlogs;
 	private IUtilisateurDao utilisateurDao = new MockUtilisateurDao();

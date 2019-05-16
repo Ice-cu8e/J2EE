@@ -8,7 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <style type="text/css">
+        <%@ include file="styles/style.css" %>
+    </style>
     <title>J2EE</title>
 </head>
 <body>

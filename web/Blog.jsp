@@ -9,7 +9,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <style type="text/css">
+        <%@ include file="styles/style.css" %>
+    </style>
     <title>J2EE</title>
 </head>
 <body>
@@ -21,6 +23,7 @@
     Connection c = getConnection();
     PreparedStatement p = c.prepareStatement("SELECT * FROM BLOG Where ID=?");
     p.setInt(1,Integer.parseInt(ID));
+
     ResultSet resultSet = p.executeQuery();
     while (resultSet.next()) {
         %>
