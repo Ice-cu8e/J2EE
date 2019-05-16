@@ -1,12 +1,8 @@
 package fr.epsi.jeeProject.listener;
 
-import fr.epsi.jeeProject.LevelChange;
-import org.apache.logging.log4j.Level;
+import fr.epsi.jeeProject.jmx.LevelChange;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.config.Configuration;
-import org.apache.logging.log4j.core.config.LoggerConfig;
 
 import javax.management.*;
 import javax.servlet.ServletContextEvent;
