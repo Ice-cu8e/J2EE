@@ -13,4 +13,5 @@ public interface IUtilisateurDao {
 	void deleteUtilisateur(Utilisateur utilisateur) throws SQLException;
     void deleteUtilisateurByEmail(String email) throws SQLException;
     List<Utilisateur> getListOfUtilisateur() throws SQLException;
+	public int getNbUtilisateurs() ;
 }

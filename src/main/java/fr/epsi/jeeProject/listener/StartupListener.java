@@ -65,11 +65,8 @@ public class StartupListener implements ServletContextListener {
         IBlogDao blogDao=new BlogDao();
         IUtilisateurDao userDao=new UtilisateurDao();
         Logger.error("Nombre de blogs : "+blogDao.getNbBlogs());
-        try {
-            Logger.error("Nombre d'utilisateurs : "+ userDao.getListOfUtilisateur().size());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Logger.error("Nombre d'utilisateurs : "+ userDao.getNbUtilisateurs());
+
 
         try {
             name = new ObjectName("fr.epsi.jeeProject:type=LevelChangeMBean");

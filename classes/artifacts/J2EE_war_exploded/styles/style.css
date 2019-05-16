@@ -167,9 +167,6 @@ a.navbar-brand{
 
 /* BASIC */
 
-html {
-    background-color: #56baed;
-}
 
 body {
     font-family: "Poppins", sans-serif;
@@ -183,7 +180,18 @@ a {
     font-weight: 400;
     cursor:pointer;
 }
-
+.red{
+    color:red;
+}
+.delete{
+    width: 30px;
+    height: 30px;
+    margin-left: auto;
+    margin-right: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
+}
 
 
 .nav {

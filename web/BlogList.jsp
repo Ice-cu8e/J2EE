@@ -31,6 +31,13 @@
                     <h3 style="margin: 0px"><% out.println(blog.getTitre());  %></h3>
                     <h5 style="margin: 0px"><% out.println(blog.getCreateur().getNom()); %></h5>
                 </div>
+                <%
+                    Utilisateur user=(Utilisateur)session.getAttribute("myUser");
+                    if (blog.getCreateur().getEmail().equals(user.getEmail())) {%>
+                <div class="delete">
+                   <a href="DeleteBlog?ID=<%out.println(blog.getId());%>"> <i class="material-icons red">delete</i></a>
+                </div>
+                <%}%>
             </div>
             <div>
                 <div class="cardText">
@@ -66,7 +73,6 @@
                                 java.util.Date d = new java.util.Date();
                                 Date date = new Date(d.getTime());
                                 String com = request.getParameter("btnCom");
-                                Utilisateur user = (Utilisateur) session.getAttribute("myUser");
 
                                 if (com != null && user != null) {
                                     Reponse r = new Reponse();

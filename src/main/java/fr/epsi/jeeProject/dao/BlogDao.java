@@ -105,14 +105,21 @@ public class BlogDao implements IBlogDao {
 
     @Override
     public void deleteBlog(Blog blog) throws SQLException {
-        for (Blog b : getBlogs()) {
-            if (b.getId().intValue() == blog.getId().intValue()) {
-                getBlogs().remove(b);
-                return;
-            }
+        PreparedStatement p = null;
+        try {
+                Logger.debug("Début de la requete deleteBlog");
+                p = c.prepareStatement("DELETE from \"blog\" where id=?");
+                p.setInt(1, blog.getId());
+                ResultSet resultSet = p.executeQuery();
+                Logger.debug("Requete deleteBlog OK");
+        }catch(SQLException e){
+            Logger.error("Requete deleteBlog KO" + e);
         }
     }
-
+    @Override
+    public void deleteBlogFromId(int id) throws SQLException {
+        deleteBlog(getBlog(id));
+    }
     @Override
     public void addReponse(Reponse reponse) {
         PreparedStatement p = null;

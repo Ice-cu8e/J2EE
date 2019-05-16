@@ -13,6 +13,7 @@ public interface IBlogDao {
 	Integer createBlog(Blog blog) throws SQLException;
 	void updateBlog(Blog blog) throws SQLException;
 	void deleteBlog(Blog blog) throws SQLException;
+	void deleteBlogFromId(int id) throws SQLException;
 	void addReponse(Reponse reponse) throws SQLException;
 	List<Reponse> getResponses(Blog blog);
 	List<Blog> getAllBlogs();

@@ -65,7 +65,7 @@ public class UtilisateurDao implements IUtilisateurDao {
                 Logger.debug("Requete deleteUtilisateur OK");
             }
         }catch(SQLException e){
-                Logger.debug("Requete deleteUtilisateur KO" + e);
+                Logger.error("Requete deleteUtilisateur KO" + e);
         }
     }
     @Override
@@ -86,9 +86,12 @@ public class UtilisateurDao implements IUtilisateurDao {
             }
             Logger.debug("Requete getListOfUtilisateur OK");
         } catch (SQLException e) {
-            Logger.debug("Requete getListOfUtilisateur KO"+e);
+            Logger.error("Requete getListOfUtilisateur KO"+e);
         }
         return users;
+    }
+    public int getNbUtilisateurs(){
+        return getListOfUtilisateur().size();
     }
 
     private Utilisateur resultsetToUser(ResultSet resultSet) {

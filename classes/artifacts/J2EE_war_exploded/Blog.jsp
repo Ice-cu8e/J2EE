@@ -25,13 +25,8 @@
 </header>
 <%
     String ID = request.getAttribute("ID").toString();
-    Connection c = getConnection();
-    PreparedStatement p = c.prepareStatement("SELECT * FROM BLOG Where ID=?");
-    p.setInt(1,Integer.parseInt(ID));
-
-    Blog blog = new Blog();
     BlogDao blogDao = new BlogDao();
-    blog = blogDao.getBlog(Integer.parseInt(ID));
+    Blog blog = blogDao.getBlog(Integer.parseInt(ID));
 
         %>
         <div class="card">
