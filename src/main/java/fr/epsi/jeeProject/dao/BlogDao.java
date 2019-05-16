@@ -132,7 +132,7 @@ public class BlogDao implements IBlogDao {
     }
 
     private List<Blog> getBlogs() {
-        return listOfBlogs;
+        return getAllBlogs();
     }
 
 }
