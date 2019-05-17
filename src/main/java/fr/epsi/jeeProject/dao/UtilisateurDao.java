@@ -22,6 +22,7 @@ public class UtilisateurDao implements IUtilisateurDao {
         getListOfUtilisateur();
     }
 
+
     @Override
     public Utilisateur getUtilisateur(String email) {
         Logger.debug("Début de la requete getUtilisateur");
@@ -86,7 +87,6 @@ public class UtilisateurDao implements IUtilisateurDao {
         List<Utilisateur> users = new ArrayList<Utilisateur>();
         PreparedStatement p = null;
         Logger.debug("Début de la requete getListOfUtilisateur");
-
         try {
             p = connection.prepareStatement("SELECT * FROM \"user\"");
             ResultSet resultSet = p.executeQuery();
