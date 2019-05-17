@@ -54,7 +54,7 @@
     </header>
     <div id="content" style="margin-top: 50px;">
         <div class='row'>
-            <div class="column">
+            <div class="column" style="flex-wrap: inherit; flex-direction: row">
                 <%@ include file="BlogList.jsp" %>
                 <div class="fab" data-toggle="modal" data-target="#createBlog">
                     +

@@ -1,12 +1,11 @@
 package fr.epsi.jeeProject.servlets;
 
+
 import fr.epsi.jeeProject.beans.Blog;
 import fr.epsi.jeeProject.beans.Reponse;
 import fr.epsi.jeeProject.beans.Utilisateur;
 import fr.epsi.jeeProject.dao.BlogDao;
 import fr.epsi.jeeProject.dao.IBlogDao;
-import fr.epsi.jeeProject.dao.IStatutDao;
-import fr.epsi.jeeProject.dao.StatutDao;
 import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.RequestDispatcher;
@@ -17,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.Date;
 import java.sql.SQLException;
 
@@ -48,6 +49,15 @@ public class CreateComServlet extends HttpServlet {
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String referer = null;
+        try {
+            referer = new URI(request.getHeader("referer")).getPath();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        String[] uriNames = referer.split("/");
+        String jspPageName = uriNames[uriNames.length-1];
+
         String com = request.getParameter("btnCom");
         int id=Integer.parseInt(request.getParameter("blog"));
         IBlogDao blogDao=new BlogDao();
@@ -68,8 +78,15 @@ public class CreateComServlet extends HttpServlet {
             } catch (SQLException e) {
                 Logger.error("Erreur insertion commentaire ");
             }finally {
-                RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/BlogPage.jsp");
-                RequetsDispatcherObj.forward(request, response);
+                String url;
+                if (jspPageName.equals("Blog")) {
+                    url = "/Blog?ID=" + blog.getId();
+                } else if (jspPageName.equals("BlogList")) {
+                    url = "Blogs";
+                } else {
+                    url = "Blogs";
+                }
+                response.sendRedirect(request.getContextPath() + url);
             }
         }else{
             Logger.error("Utilisateur déconnecté ");
