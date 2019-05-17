@@ -1,6 +1,7 @@
 package fr.epsi.jeeProject.dao;
 
 import fr.epsi.jeeProject.beans.Utilisateur;
+import fr.epsi.jeeProject.server.PostgresServer;
 import org.apache.logging.log4j.LogManager;
 
 import java.sql.PreparedStatement;
@@ -34,6 +35,7 @@ public class UtilisateurDao implements IUtilisateurDao {
     @Override
     public void createUtilisateur(Utilisateur utilisateur) throws SQLException {
         try {
+            connection = PostgresServer.getConnection();  // INSTANCE POUR TEST
             PreparedStatement insert = connection.prepareStatement("INSERT INTO jee.public.user VALUES(?,?,?,?,?)");
             insert.setString(1, utilisateur.getEmail());
             insert.setString(2, utilisateur.getNom());

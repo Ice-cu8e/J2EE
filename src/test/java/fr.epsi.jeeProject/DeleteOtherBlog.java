@@ -27,7 +27,7 @@ public class DeleteOtherBlog {
         blog.setCreateur(user1);
         blog.setTitre("TITRE TEST");
         blog.setStatut(statut);
-        blogDao.createBlog(blog);
+        blogDao.createBlogWithId(blog);
         blogDao.deleteBlogFromId(9999,user2);
         Assert.assertEquals(blogDao.getBlog(9999).getTitre(),"TITRE TEST");
         blogDao.deleteBlogFromId(9999,user1);

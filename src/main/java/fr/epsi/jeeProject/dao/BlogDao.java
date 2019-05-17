@@ -6,6 +6,7 @@ import fr.epsi.jeeProject.beans.Utilisateur;
 import fr.epsi.jeeProject.dao.IBlogDao;
 import fr.epsi.jeeProject.dao.IStatutDao;
 import fr.epsi.jeeProject.dao.IUtilisateurDao;
+import fr.epsi.jeeProject.server.PostgresServer;
 import org.apache.logging.log4j.LogManager;
 
 import java.sql.PreparedStatement;
@@ -74,6 +75,7 @@ public class BlogDao implements IBlogDao {
     @Override
     public void createBlog(Blog blog) throws SQLException {
         try {
+            connection = PostgresServer.getConnection();  // INSTANCE POUR TEST
             PreparedStatement insert = connection.prepareStatement("INSERT INTO public.blog (\"TITRE\",\"DESCRIPTION\",\"EMAIL\",\"DATE_CREATION\",\"DATE_MODIFICATION\",\"STATUT\") VALUES(?,?,?,?,?,?)");
             insert.setString(1, blog.getTitre());
             insert.setString(2,blog.getDescription());
@@ -88,7 +90,25 @@ public class BlogDao implements IBlogDao {
 
         }
     }
+    @Override
+    public void createBlogWithId(Blog blog) throws SQLException {
+        try {
+            connection = PostgresServer.getConnection();  // INSTANCE POUR TEST
+            PreparedStatement insert = connection.prepareStatement("INSERT INTO public.blog (\"TITRE\",\"DESCRIPTION\",\"EMAIL\",\"DATE_CREATION\",\"DATE_MODIFICATION\",\"STATUT\",\"id\") VALUES(?,?,?,?,?,?,?)");
+            insert.setInt(7,blog.getId());
+            insert.setString(1, blog.getTitre());
+            insert.setString(2, blog.getDescription());
+            insert.setString(3, blog.getCreateur().getEmail());
+            java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+            insert.setDate(4, date);
+            insert.setDate(5, date);
+            insert.setInt(6, blog.getStatut().getId());
+            insert.executeUpdate();
+            insert.close();
+        } catch (SQLException e) {
 
+        }
+    }
     @Override
     public void updateBlog(Blog blog) throws SQLException {
         for (Blog b : getBlogs()) {
@@ -115,6 +135,7 @@ public class BlogDao implements IBlogDao {
     }
     @Override
     public void deleteBlogFromId(int id,Utilisateur user) throws SQLException {
+        Blog bllog=getBlog(id);
         if (user.getEmail().equals(getBlog(id).getCreateur().getEmail())){
             deleteBlog(getBlog(id));
         }

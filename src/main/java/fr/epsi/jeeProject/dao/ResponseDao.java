@@ -34,6 +34,7 @@ public class ResponseDao {
         PreparedStatement p = null;
         Logger.debug("Debut de la requete getResponsesBlog");
         try {
+            Logger.debug("Debut de la requete getResponsesBlog");
             p = connection.prepareStatement("SELECT * FROM blog_commentaires WHERE blog_id = " + blog.getId());
             ResultSet resultSet = p.executeQuery();
             while (resultSet.next()) {
