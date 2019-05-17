@@ -79,6 +79,21 @@ public class CreateUserServlet extends HttpServlet {
                                 Logger.info("Utilisateur " + email + " créé !");
                                 RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/BlogPage.jsp");
                                 RequetsDispatcherObj.forward(request, response);
+                            } else {
+                                insertedUser.setAdmin(false);
+                                userDao.createUtilisateur(insertedUser);
+                                HttpSession session = request.getSession();
+                                session.setAttribute("usercreated", "Utilisateur " + email + " créé !");
+                                Logger.info("Utilisateur " + email + " créé !");
+                                if (admin!=null) {
+                                    if (admin.equals("false")) {
+                                        RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/BlogPage.jsp");
+                                        RequetsDispatcherObj.forward(request, response);
+                                    }
+                                }else {
+                                    RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Index.jsp");
+                                    RequetsDispatcherObj.forward(request, response);
+                                }
                             }
                         } else {
                             insertedUser.setAdmin(false);
@@ -95,7 +110,7 @@ public class CreateUserServlet extends HttpServlet {
                                 RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Index.jsp");
                                 RequetsDispatcherObj.forward(request, response);
                             }
-                    }
+                        }
                 }else {
                     HttpSession session = request.getSession();
                     session.setAttribute("createuser", "Un compte existe deja avec cet email");
