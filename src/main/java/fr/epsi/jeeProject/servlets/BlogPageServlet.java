@@ -44,8 +44,16 @@ public class BlogPageServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
-        RequestDispatcher RequetsDispatcherObj =request.getRequestDispatcher("/Index.jsp");
-        RequetsDispatcherObj.forward(request, response);
+        HttpSession session=request.getSession();
+        if(!(session.getAttribute("myUser")==null)){
+            String ID=request.getParameter( "ID" );
+            request.setAttribute("ID",ID);
+            RequestDispatcher RequetsDispatcherObj =request.getRequestDispatcher("/BlogPage.jsp");
+            RequetsDispatcherObj.forward(request, response);
+        }else {
+            RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Index.jsp");
+            RequetsDispatcherObj.forward(request, response);
+        }
     }
 
     /**

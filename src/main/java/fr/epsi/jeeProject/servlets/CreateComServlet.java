@@ -82,9 +82,9 @@ public class CreateComServlet extends HttpServlet {
                 if (jspPageName.equals("Blog")) {
                     url = "/Blog?ID=" + blog.getId();
                 } else if (jspPageName.equals("BlogList")) {
-                    url = "Blogs";
+                    url = "/Blogs";
                 } else {
-                    url = "Blogs";
+                    url = "/Blogs";
                 }
                 response.sendRedirect(request.getContextPath() + url);
             }
