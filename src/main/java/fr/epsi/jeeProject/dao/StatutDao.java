@@ -13,7 +13,7 @@ import java.util.List;
 import static fr.epsi.jeeProject.listener.StartupListener.connection;
 
 public class StatutDao implements IStatutDao {
-    private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(BlogDao.class);
+    private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(StatutDao.class);
 
 
     @Override

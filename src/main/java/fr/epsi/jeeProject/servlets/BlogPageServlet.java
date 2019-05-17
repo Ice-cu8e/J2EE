@@ -1,6 +1,8 @@
 package fr.epsi.jeeProject.servlets;
 
 import fr.epsi.jeeProject.beans.Utilisateur;
+import fr.epsi.jeeProject.dao.IUtilisateurDao;
+import fr.epsi.jeeProject.dao.UtilisateurDao;
 import fr.epsi.jeeProject.listener.StartupListener;
 import org.apache.logging.log4j.LogManager;
 
@@ -53,17 +55,16 @@ public class BlogPageServlet extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         Utilisateur myUser = new Utilisateur();
+        IUtilisateurDao daoUser=new UtilisateurDao();
         try {
-            PreparedStatement prep = connection.prepareStatement("SELECT * FROM jee.public.user Where email=? and PASSWORD=?");
-            prep.setString(1, login);
-            prep.setString(2, password);
-            ResultSet resultSet = prep.executeQuery();
-            while (resultSet.next()) {
-                myUser.setEmail(resultSet.getString(1));
-                myUser.setNom(resultSet.getString(2));
-                myUser.setDateCreation(resultSet.getDate(3));
-                myUser.setPassord(resultSet.getString(4));
-                myUser.setAdmin(resultSet.getBoolean(5));
+            for(Utilisateur aUser:daoUser.getListOfUtilisateur()) {
+                if (aUser.getEmail().equals(login) && aUser.getPassord().equals(password)) {
+                    myUser.setEmail(aUser.getEmail());
+                    myUser.setNom(aUser.getNom());
+                    myUser.setDateCreation(aUser.getDateCreation());
+                    myUser.setPassord(aUser.getPassord());
+                    myUser.setAdmin(aUser.getAdmin());
+                }
             }
         } catch (SQLException e) {
             Logger.error(e);

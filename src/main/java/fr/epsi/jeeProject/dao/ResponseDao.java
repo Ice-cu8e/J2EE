@@ -15,7 +15,7 @@ import java.util.List;
 import static fr.epsi.jeeProject.listener.StartupListener.connection;
 
 public class ResponseDao {
-    private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(BlogDao.class);
+    private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(ResponseDao.class);
 
     //@Override
     public Reponse getResponse(Integer id, Blog blog) {
@@ -32,6 +32,7 @@ public class ResponseDao {
         List<Reponse> status = new ArrayList<Reponse>();
         PreparedStatement p = null;
         try {
+            Logger.debug("Debut de la requete getResponsesBlog");
             p = connection.prepareStatement("SELECT * FROM blog_commentaires WHERE blog_id = " + blog.getId());
             ResultSet resultSet = p.executeQuery();
             while (resultSet.next()) {

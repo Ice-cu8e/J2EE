@@ -14,7 +14,7 @@ import java.util.List;
 import static fr.epsi.jeeProject.listener.StartupListener.connection;
 
 public class UtilisateurDao implements IUtilisateurDao {
-    private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(BlogDao.class);
+    private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(UtilisateurDao.class);
 
     @Override
     public Utilisateur getUtilisateur(String email) {
