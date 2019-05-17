@@ -7,6 +7,8 @@
 </head>
 <body>
 <h1>HOME</h1>
-    <% Utilisateur user=(Utilisateur) session.getAttribute("myUser"); out.println(user.getNom());%>
+    <%
+        Utilisateur user=(Utilisateur) session.getAttribute("myUser");
+        out.println(user.getNom());%>
     </body>
 </html>

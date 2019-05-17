@@ -69,7 +69,6 @@ public class StartupListener implements ServletContextListener {
         }
         PostgresServer postgresServer = new PostgresServer();
         connection = PostgresServer.connection;
-
     }
 
     public void contextDestroyed(ServletContextEvent sce) {

@@ -4,7 +4,8 @@
 <%@ page import="fr.epsi.jeeProject.dao.BlogDao" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
-<%@ page import="fr.epsi.jeeProject.beans.Reponse" %><%--
+<%@ page import="fr.epsi.jeeProject.beans.Reponse" %>
+<%@ page import="fr.epsi.jeeProject.beans.Utilisateur" %><%--
   Created by IntelliJ IDEA.
   User: thomas
   Date: 27/02/19
@@ -64,10 +65,27 @@
                     }
                 %>
                 <div>
-                    <div style="padding:8px; display: flex">
-                        <input class="input" type="text" placeholder="Votre commentaire">
-                        <button class="buttonSend">Envoyer</button>
-                    </div>
+                    <form style="margin-bottom: 0px">
+                        <div style="padding:8px; display: flex">
+                            <input class="input" type="text" name="btnCom" placeholder="Votre commentaire">
+                            <button class="buttonSend" type="submit" value="ok" >Envoyer</button>
+                            <%
+                                java.util.Date d = new java.util.Date();
+                                Date date = new Date(d.getTime());
+                                String com = request.getParameter("btnCom");
+                                Utilisateur user = (Utilisateur) session.getAttribute("myUser");
+
+                                if (com != null && user != null) {
+                                    Reponse r = new Reponse();
+                                    r.setCommentaire(com);
+                                    r.setPublication(date);
+                                    r.setBlog(blog);
+                                    r.setBlogger(user);
+                                    blogDao.addReponse(r);
+                                }
+                            %>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
