@@ -18,12 +18,47 @@
     <style type="text/css">
         <%@ include file="styles/style.css" %>
     </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <title>J2EE</title>
 </head>
 <body>
 <header class="nav">
-    <h2 class="navTitle">J2EE</h2>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-bottom: 0px; padding-top: 0px;">
+        <a class="navbar-brand">J2EE</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <% Utilisateur myUser=(Utilisateur)session.getAttribute("myUser");
+                            out.println(myUser.getEmail());%>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                        <%
+                            if (myUser.getAdmin()){
+                        %>
+                        <a class="dropdown-item" data-toggle="modal" data-target="#create">Créer un utilisateur</a>
+                        <a class="dropdown-item disabled" data-toggle="modal" data-target="#modif">Modifier un utilisateur</a>
+                        <a class="dropdown-item" data-toggle="modal" data-target="#delete">Supprimer un utilisateur</a>
+                        <div class="dropdown-divider"></div>
+
+                        <%}%>
+                        <a class="dropdown-item" href="Disconnection">Se déconnecter</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </header>
+<div style="margin-top: 60px">
 <%
     String ID = request.getAttribute("ID").toString();
     BlogDao blogDao = new BlogDao();
