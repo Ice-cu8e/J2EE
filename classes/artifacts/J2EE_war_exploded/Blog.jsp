@@ -65,25 +65,11 @@
                     }
                 %>
                 <div>
-                    <form style="margin-bottom: 0px">
+                    <form action="CreateCom" method="post" style="margin-bottom: 0px">
                         <div style="padding:8px; display: flex">
                             <input class="input" type="text" name="btnCom" placeholder="Votre commentaire">
+                            <input class="input" type="text" name="blog" value="<%out.println(blog.getId());%>" style="display:none;">
                             <button class="buttonSend" type="submit" value="ok" >Envoyer</button>
-                            <%
-                                java.util.Date d = new java.util.Date();
-                                Date date = new Date(d.getTime());
-                                String com = request.getParameter("btnCom");
-                                Utilisateur user = (Utilisateur) session.getAttribute("myUser");
-
-                                if (com != null && user != null) {
-                                    Reponse r = new Reponse();
-                                    r.setCommentaire(com);
-                                    r.setPublication(date);
-                                    r.setBlog(blog);
-                                    r.setBlogger(user);
-                                    blogDao.addReponse(r);
-                                }
-                            %>
                         </div>
                     </form>
                 </div>
