@@ -35,8 +35,18 @@
                     Utilisateur user=(Utilisateur)session.getAttribute("myUser");
                     if (blog.getCreateur().getEmail().equals(user.getEmail())||(user.getAdmin())) {%>
                 <div class="delete">
-                    <a href="ModifyBlog?ID=<%out.println(blog.getId());%>&type=2"> <i class="material-icons blue">archive</i></a>
-                    <a href="DeleteBlog?ID=<%out.println(blog.getId());%>"> <i class="material-icons red">delete</i></a>
+                    <%
+                        if(!(blog.getStatut().getId()==2)){
+                    %>
+                    <a href="ModifyBlog?ID=<%out.println(blog.getId());%>&type=2" data-toggle="tooltip" title="Archiver"data-placement="left"> <i class="material-icons blue">archive</i></a>
+                    <%
+                        }else{
+                    %>
+                    <a href="ModifyBlog?ID=<%out.println(blog.getId());%>&type=1"data-toggle="tooltip" title="Publier"data-placement="left"> <i class="material-icons green"data-placement="left">unarchive</i></a>
+                    <%
+                        }
+                    %>
+                    <a href="DeleteBlog?ID=<%out.println(blog.getId());%>"> <i class="material-icons red" data-toggle="tooltip" title="Supprimer"data-placement="left">delete</i></a>
                 </div>
                 <%}%>
             </div>
@@ -85,6 +95,11 @@
                         </div>
             </div>
         </div>
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
         <%
     }
 %>
