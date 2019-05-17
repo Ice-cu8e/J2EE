@@ -25,7 +25,6 @@ public class UtilisateurDao implements IUtilisateurDao {
 
     @Override
     public Utilisateur getUtilisateur(String email) {
-        Logger.debug("Début de la requete getUtilisateur");
         for (Utilisateur u : listUsers) {
             if (u.getEmail().equals(email))
                 return u;

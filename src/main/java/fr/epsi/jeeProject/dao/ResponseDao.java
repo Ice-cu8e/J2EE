@@ -34,7 +34,7 @@ public class ResponseDao {
         PreparedStatement p = null;
         Logger.debug("Debut de la requete getResponsesBlog");
         try {
-            p = connection.prepareStatement("SELECT * FROM blog_commentaires WHERE blog_id = " + blog.getId());
+            p = connection.prepareStatement("SELECT * FROM blog_commentaires WHERE blog_id = " + blog.getId() + " ORDER BY date_creation DESC");
             ResultSet resultSet = p.executeQuery();
             while (resultSet.next()) {
                 reponseList.add(resultSetToStatut(resultSet));

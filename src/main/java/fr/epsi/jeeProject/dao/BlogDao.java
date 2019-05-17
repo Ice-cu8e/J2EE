@@ -37,7 +37,7 @@ public class BlogDao implements IBlogDao {
         List<Blog> blogs = new ArrayList<Blog>();
         PreparedStatement p = null;
         try {
-            p = connection.prepareStatement("SELECT * FROM BLOG");
+            p = connection.prepareStatement("SELECT * FROM BLOG ORDER BY \"DATE_MODIFICATION\" DESC");
             ResultSet resultSet = p.executeQuery();
             while (resultSet.next()) {
                 blogs.add(resultSetToBlog(resultSet));
