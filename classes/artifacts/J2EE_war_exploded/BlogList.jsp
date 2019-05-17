@@ -78,23 +78,19 @@
                                         java.util.Date d = new java.util.Date();
                                         Date date = new Date(d.getTime());
                                         String com = request.getParameter("btnCom");
-                                        Utilisateur user = (Utilisateur) session.getAttribute("myUser");
 
-                                if (com != null && user != null) {
-                                    Reponse r = new Reponse();
-                                    r.setCommentaire(com);
-                                    r.setPublication(date);
-                                    r.setBlog(blog);
-                                    r.setBlogger(user);
-
-                                    System.out.println(r.getBlogger().getNom());
-
-                                    blogDao.addReponse(r);
-                                }
-                            %>
+                                        if (com != null && user != null) {
+                                            Reponse r = new Reponse();
+                                            r.setCommentaire(com);
+                                            r.setPublication(date);
+                                            r.setBlog(blog);
+                                            r.setBlogger(user);
+                                            blogDao.addReponse(r);
+                                        }
+                                    %>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
             </div>
         </div>
         <%

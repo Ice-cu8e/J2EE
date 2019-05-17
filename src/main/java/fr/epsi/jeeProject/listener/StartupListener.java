@@ -90,14 +90,6 @@ public class StartupListener implements ServletContextListener {
         } catch (MBeanRegistrationException e) {
             e.printStackTrace();
         }
-        try {
-            Class.forName("org.postgresql.Driver" );
-            Logger.info("Driver postgresql ok");
-        } catch (Exception e) {
-            Logger.error("Erreur de driver", e);
-        }
-        connection = PostgresServer.connection;
-        PostgresServer postgresServer = new PostgresServer();
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
