@@ -16,10 +16,16 @@ import static fr.epsi.jeeProject.listener.StartupListener.connection;
 
 public class UtilisateurDao implements IUtilisateurDao {
     private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(UtilisateurDao.class);
+    List<Utilisateur> listUsers = new ArrayList<Utilisateur>();
+
+    public UtilisateurDao() {
+        getListOfUtilisateur();
+    }
 
     @Override
     public Utilisateur getUtilisateur(String email) {
-        for (Utilisateur u : getListOfUtilisateur()) {
+        Logger.debug("Début de la requete getUtilisateur");
+        for (Utilisateur u : listUsers) {
             if (u.getEmail().equals(email))
                 return u;
         }
@@ -46,7 +52,7 @@ public class UtilisateurDao implements IUtilisateurDao {
 
     @Override
     public void updateUtilisateur(Utilisateur utilisateur) throws SQLException {
-        for (Utilisateur u : getListOfUtilisateur()) {
+        for (Utilisateur u : listUsers) {
             if (u.getEmail().equals(utilisateur.getEmail())) {
                 u.setAdmin(utilisateur.getAdmin());
                 u.setNom(utilisateur.getNom());
@@ -74,10 +80,13 @@ public class UtilisateurDao implements IUtilisateurDao {
         Utilisateur myUser=getUtilisateur(email);
         deleteUtilisateur(myUser);
     }
-@Override
+
+    @Override
     public List<Utilisateur> getListOfUtilisateur() {
         List<Utilisateur> users = new ArrayList<Utilisateur>();
         PreparedStatement p = null;
+        Logger.debug("Début de la requete getListOfUtilisateur");
+
         try {
             p = connection.prepareStatement("SELECT * FROM \"user\"");
             ResultSet resultSet = p.executeQuery();
@@ -88,10 +97,11 @@ public class UtilisateurDao implements IUtilisateurDao {
         } catch (SQLException e) {
             Logger.error("Requete getListOfUtilisateur KO"+e);
         }
+        listUsers = users;
         return users;
     }
     public int getNbUtilisateurs(){
-        return getListOfUtilisateur().size();
+        return listUsers.size();
     }
 
     private Utilisateur resultsetToUser(ResultSet resultSet) {

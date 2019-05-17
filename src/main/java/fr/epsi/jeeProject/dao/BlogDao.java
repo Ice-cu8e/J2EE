@@ -19,12 +19,12 @@ import java.util.List;
 import static fr.epsi.jeeProject.listener.StartupListener.connection;
 
 public class BlogDao implements IBlogDao {
-    private static List<Blog> listOfBlogs;
+    private static List<Blog> blogList = new ArrayList<Blog>();
     private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(BlogDao.class);
 
     @Override
     public Blog getBlog(Integer id) {
-        for (Blog b : getBlogs()) {
+        for (Blog b : blogList) {
             if (b.getId().intValue() == id.intValue()) {
                 return b;
             }
@@ -46,6 +46,7 @@ public class BlogDao implements IBlogDao {
         } catch (SQLException e) {
             Logger.debug("Requete getAllBlogs KO :"+ e);
         }
+        blogList = blogs;
         return blogs;
     }
     public int getNbBlogs(){
@@ -163,7 +164,10 @@ public class BlogDao implements IBlogDao {
     }
 
     private List<Blog> getBlogs() {
-        return getAllBlogs();
+        return blogList;
     }
 
+    public static List<Blog> getBlogList() {
+        return blogList;
+    }
 }
