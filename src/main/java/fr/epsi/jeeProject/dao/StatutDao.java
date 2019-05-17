@@ -19,6 +19,7 @@ public class StatutDao implements IStatutDao {
     public StatutDao(){
         getListOfStatuts();
     }
+
     @Override
     public Statut getStatut(Integer id) {
         for (Statut s: statutList) {

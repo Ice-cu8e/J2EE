@@ -52,7 +52,7 @@
             </div>
         </nav>
     </header>
-    <div id="content" style="margin-top: 50px;">
+    <div id="content" style="margin-top: 60px;">
         <div class='row'>
             <div class="column" style="flex-wrap: inherit; flex-direction: row">
                 <%@ include file="BlogList.jsp" %>

@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 
 
@@ -41,6 +43,15 @@ public class ModifyBlogServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String referer = null;
+        try {
+            referer = new URI(request.getHeader("referer")).getPath();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        String[] uriNames = referer.split("/");
+        String jspPageName = uriNames[uriNames.length-1];
+
         IBlogDao blogDao=new BlogDao();
         int idBlog=Integer.parseInt(request.getParameter("ID"));
         int id=Integer.parseInt(request.getParameter("type"));
@@ -54,8 +65,14 @@ public class ModifyBlogServlet extends HttpServlet {
         } catch (SQLException e) {
             Logger.error("Error update blog "+ e);
         }finally {
-            RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/BlogPage.jsp");
-            RequetsDispatcherObj.forward(request, response);
+            RequestDispatcher RequetsDispatcherObj = null;
+            String url = "";
+            if (jspPageName.equals("Blog")) {
+                url = "/Blog?ID=" + idBlog;
+            } else if(jspPageName.equals("Blogs")) {
+                url = "/Blogs";
+            }
+            response.sendRedirect(request.getContextPath() + url);
         }
     }
     /**

@@ -102,6 +102,10 @@
                     <li> Date de modification : <% out.println(blog.getDateModification());  %> </li>
                 </ul>
             </div>
+            <div>
+                <p class="comText comTextHeader" style="margin:3px"><%out.println(blog.getStatut().getDescription());%>
+                </p>
+            </div>
             <div class="commentaire">
                 <%
                     for (Reponse reponse: blogDao.getResponses(blog)) {
