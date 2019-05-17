@@ -54,13 +54,11 @@
     </header>
     <div id="content" style="margin-top: 50px;">
         <div class='row'>
-            <div class="column columnButton">
-                <button class="myButton" data-toggle="modal" data-target="#createBlog">Créer un blog</button>
-            </div>
-        </div>
-        <div class='row'>
             <div class="column">
                 <%@ include file="BlogList.jsp" %>
+                <div class="fab" data-toggle="modal" data-target="#createBlog">
+                    +
+                </div>
             </div>
         </div>
     </div>
@@ -78,8 +76,8 @@
                     <form action="CreateBlog" method="post">
                         <div class="modalContent">
                             <input required type="text" id="titre" class="" name="titre" placeholder="Titre">
-                            <textarea required id="description" class="" name="description" placeholder="Description"></textarea>
-                            <SELECT name="statut" size="1">
+                            <textarea required style="margin: 5px" id="description" class="" name="description" placeholder="Description"></textarea>
+                            <SELECT style="margin: 5px" name="statut" size="1">
                                 <% IStatutDao myStatuts=new StatutDao();
                                     for (fr.epsi.jeeProject.beans.Statut aStatut:myStatuts.getListOfStatuts()) {
 

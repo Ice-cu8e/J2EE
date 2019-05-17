@@ -106,6 +106,30 @@ a.navbar-brand{
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.fab {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    background-color: #56baed;
+    border-radius: 50%;
+    box-shadow: 0 6px 10px 0 #666;
+    font-size: 40px;
+    line-height: 50px;
+    color: white;
+    text-align: center;
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    transition: all 0.1s ease-in-out;
+}
+
+.fab:hover {
+    box-shadow: 0 6px 14px 0 #666;
+    transform: scale(1.05);
 }
 
 .input  {

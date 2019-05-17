@@ -18,6 +18,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+
 import static fr.epsi.jeeProject.listener.StartupListener.connection;
 
 /**
@@ -57,7 +59,8 @@ public class BlogPageServlet extends HttpServlet {
         Utilisateur myUser = new Utilisateur();
         IUtilisateurDao daoUser=new UtilisateurDao();
         try {
-            for(Utilisateur aUser:daoUser.getListOfUtilisateur()) {
+            List<Utilisateur> utilisateurList = daoUser.getListOfUtilisateur();
+            for(Utilisateur aUser : utilisateurList) {
                 if (aUser.getEmail().equals(login) && aUser.getPassord().equals(password)) {
                     myUser.setEmail(aUser.getEmail());
                     myUser.setNom(aUser.getNom());
