@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class UtilisateurDao implements IUtilisateurDao {
     @Override
     public void createUtilisateur(Utilisateur utilisateur) throws SQLException {
         try {
-            PreparedStatement insert = c.prepareStatement("INSERT INTO jee.public.user VALUES(?,?,?,?,?)");
+            PreparedStatement insert = connection.prepareStatement("INSERT INTO jee.public.user VALUES(?,?,?,?,?)");
             insert.setString(1, utilisateur.getEmail());
             insert.setString(2, utilisateur.getNom());
             java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
@@ -57,7 +58,7 @@ public class UtilisateurDao implements IUtilisateurDao {
         try {
             if (!utilisateur.getAdmin()) {
                 Logger.debug("Début de la requete deleteUtilisateur");
-                p = c.prepareStatement("DELETE from \"user\" where email=?");
+                p = connection.prepareStatement("DELETE from \"user\" where email=?");
                 p.setString(1, utilisateur.getEmail());
                 ResultSet resultSet = p.executeQuery();
                 Logger.debug("Requete deleteUtilisateur OK");

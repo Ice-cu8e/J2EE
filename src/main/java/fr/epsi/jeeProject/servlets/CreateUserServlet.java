@@ -59,7 +59,6 @@ public class CreateUserServlet extends HttpServlet {
         Utilisateur userExist=new Utilisateur();
         IUtilisateurDao userDao= new UtilisateurDao();
         if(createpassword.equals(secondpassword)){
-            Connection connection = StartupListener.c;
             try {
                 userExist=userDao.getUtilisateur(email);
                 if (userExist!=null){

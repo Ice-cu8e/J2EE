@@ -6,6 +6,7 @@ import fr.epsi.jeeProject.beans.Utilisateur;
 import fr.epsi.jeeProject.dao.IBlogDao;
 import fr.epsi.jeeProject.dao.IStatutDao;
 import fr.epsi.jeeProject.dao.IUtilisateurDao;
+import org.apache.logging.log4j.LogManager;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -72,15 +73,14 @@ public class BlogDao implements IBlogDao {
     @Override
     public void createBlog(Blog blog) throws SQLException {
         try {
-            PreparedStatement insert = c.prepareStatement("INSERT INTO jee.public.blog VALUES(?,?,?,?,?,?,?)");
-            insert.setInt(1, blog.getId());
-            insert.setString(2, blog.getTitre());
-            insert.setString(3,blog.getDescription());
-            insert.setString(4, blog.getCreateur().getEmail());
+            PreparedStatement insert = connection.prepareStatement("INSERT INTO public.blog (\"TITRE\",\"DESCRIPTION\",\"EMAIL\",\"DATE_CREATION\",\"DATE_MODIFICATION\",\"STATUT\") VALUES(?,?,?,?,?,?)");
+            insert.setString(1, blog.getTitre());
+            insert.setString(2,blog.getDescription());
+            insert.setString(3, blog.getCreateur().getEmail());
             java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+            insert.setDate(4, date);
             insert.setDate(5, date);
-            insert.setDate(6, date);
-            insert.setInt(7,blog.getStatut().getId());
+            insert.setInt(6,blog.getStatut().getId());
             insert.executeUpdate();
             insert.close();
         }catch (SQLException e){
@@ -104,7 +104,7 @@ public class BlogDao implements IBlogDao {
         PreparedStatement p = null;
         try {
                 Logger.debug("Début de la requete deleteBlog");
-                p = c.prepareStatement("DELETE from \"blog\" where id=?");
+                p = connection.prepareStatement("DELETE from \"blog\" where id=?");
                 p.setInt(1, blog.getId());
                 ResultSet resultSet = p.executeQuery();
                 Logger.debug("Requete deleteBlog OK");

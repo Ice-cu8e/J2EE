@@ -16,8 +16,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import static fr.epsi.jeeProject.server.PostgresServer.getConnection;
+import static fr.epsi.jeeProject.listener.StartupListener.connection;
 
 /**
  * Servlet implementation class BlogServlet
@@ -54,7 +53,6 @@ public class BlogPageServlet extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         Utilisateur myUser = new Utilisateur();
-        Connection connection = getConnection();
         try {
             PreparedStatement prep = connection.prepareStatement("SELECT * FROM jee.public.user Where email=? and PASSWORD=?");
             prep.setString(1, login);

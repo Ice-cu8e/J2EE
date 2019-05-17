@@ -33,7 +33,7 @@
                 </div>
                 <%
                     Utilisateur user=(Utilisateur)session.getAttribute("myUser");
-                    if (blog.getCreateur().getEmail().equals(user.getEmail())) {%>
+                    if (blog.getCreateur().getEmail().equals(user.getEmail())||(user.getAdmin())) {%>
                 <div class="delete">
                    <a href="DeleteBlog?ID=<%out.println(blog.getId());%>"> <i class="material-icons red">delete</i></a>
                 </div>

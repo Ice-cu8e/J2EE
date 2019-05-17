@@ -1,5 +1,5 @@
 <%@ page import="fr.epsi.jeeProject.beans.Blog" %>
-<%@ page import="static fr.epsi.jeeProject.server.PostgresServer.getConnection" %>
+<%@ page import="static fr.epsi.jeeProject.server.PostgresServer.connection" %>
 <%@ page import="fr.epsi.jeeProject.dao.BlogDao" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
@@ -17,7 +17,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<Blog> blogs = new ArrayList<Blog>();
+    List<Blog> blogs;
     BlogDao blogDao = new BlogDao();
     blogs = blogDao.getAllBlogs();
     for (Blog blog: blogs) {
@@ -33,7 +33,7 @@
                 </div>
                 <%
                     Utilisateur user=(Utilisateur)session.getAttribute("myUser");
-                    if (blog.getCreateur().getEmail().equals(user.getEmail())) {%>
+                    if (blog.getCreateur().getEmail().equals(user.getEmail())||(user.getAdmin())) {%>
                 <div class="delete">
                    <a href="DeleteBlog?ID=<%out.println(blog.getId());%>"> <i class="material-icons red">delete</i></a>
                 </div>
@@ -54,41 +54,43 @@
                 </div>
                 <%
                     blogDao.getResponses(blog);
-                    Reponse reponse = blogDao.getResponses(blog).get(0);
-                %>
-                    <div class="comContent">
-                        <div style="display: flex">
-                            <p class="comText comTextHeader"><% out.println(reponse.getBlogger().getNom());  %></p>
-                            <p class="comText comTextHeader
-                            " style="margin-left: auto"><% out.println(reponse.getPublication());  %></p>
-                        </div>
-                        <p class="comText"><% out.println(reponse.getCommentaire());  %></p>
-                    </div>
-                <div>
-                    <form style="margin-bottom: 0px">
-                        <div style="padding:8px; display: flex">
-                            <input class="input" type="text" name="btnCom" placeholder="Votre commentaire">
-                            <button class="buttonSend" type="submit" value="ok" >Envoyer</button>
-                            <%
-                                java.util.Date d = new java.util.Date();
-                                Date date = new Date(d.getTime());
-                                String com = request.getParameter("btnCom");
+                    if (blogDao.getResponses(blog).size() != 0) {
+                        Reponse reponse = blogDao.getResponses(blog).get(0);
+                        %>
+                            <div class="comContent">
+                                <div style="display: flex">
+                                    <p class="comText comTextHeader"><% out.println(reponse.getBlogger().getNom());  %></p>
+                                    <p class="comText comTextHeader
+                                    " style="margin-left: auto"><% out.println(reponse.getPublication());  %></p>
+                                </div>
+                                <p class="comText"><% out.println(reponse.getCommentaire());  %></p>
+                            </div>
+                        <div>
+                            <form style="margin-bottom: 0px">
+                                <div style="padding:8px; display: flex">
+                                    <input class="input" type="text" name="btnCom" placeholder="Votre commentaire">
+                                    <button class="buttonSend" type="submit" value="ok" >Envoyer</button>
+                                    <%
+                                        java.util.Date d = new java.util.Date();
+                                        Date date = new Date(d.getTime());
+                                        String com = request.getParameter("btnCom");
 
-                                if (com != null && user != null) {
-                                    Reponse r = new Reponse();
-                                    r.setCommentaire(com);
-                                    r.setPublication(date);
-                                    r.setBlog(blog);
-                                    r.setBlogger(user);
-
-                                    System.out.println(r.getBlogger().getNom());
-
-                                    blogDao.addReponse(r);
-                                }
-                            %>
+                                        if (com != null && user != null) {
+                                            Reponse r = new Reponse();
+                                            r.setCommentaire(com);
+                                            r.setPublication(date);
+                                            r.setBlog(blog);
+                                            r.setBlogger(user);
+                                            blogDao.addReponse(r);
+                                        }
+                                    %>
                         </div>
                     </form>
                 </div>
+                <%
+
+                    }
+                %>
             </div>
         </div>
         <%

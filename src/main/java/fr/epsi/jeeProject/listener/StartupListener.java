@@ -7,6 +7,8 @@ import fr.epsi.jeeProject.dao.IBlogDao;
 import fr.epsi.jeeProject.dao.IUtilisateurDao;
 import fr.epsi.jeeProject.dao.UtilisateurDao;
 import fr.epsi.jeeProject.jmx.LevelChange;
+import fr.epsi.jeeProject.jmx.NbBlogs;
+import fr.epsi.jeeProject.server.PostgresServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionEvent;
 import java.lang.management.ManagementFactory;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import static java.lang.System.out;
@@ -55,16 +58,17 @@ public class StartupListener implements ServletContextListener {
         } catch (Exception e) {
             Logger.error("Erreur de driver", e);
         }
-        PostgresServer postgresServer = new PostgresServer();
-        connection = PostgresServer.connection;
+        try {
+            connection = PostgresServer.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        Connection c = getConnection();
         Logger.info("Connexion ok");
         IBlogDao blogDao=new BlogDao();
         IUtilisateurDao userDao=new UtilisateurDao();
         Logger.error("Nombre de blogs : "+blogDao.getNbBlogs());
         Logger.error("Nombre d'utilisateurs : "+ userDao.getNbUtilisateurs());
-
 
         try {
             name = new ObjectName("fr.epsi.jeeProject:type=LevelChangeMBean");

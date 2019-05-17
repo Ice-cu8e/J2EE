@@ -1,7 +1,5 @@
-<%@ page import="fr.epsi.jeeProject.beans.Utilisateur" %>
-<%@ page import="fr.epsi.jeeProject.dao.IBlogDao" %>
-<%@ page import="fr.epsi.jeeProject.dao.IUtilisateurDao" %>
-<%@ page import="fr.epsi.jeeProject.dao.UtilisateurDao" %><%--
+<%@ page import="fr.epsi.jeeProject.dao.*" %>
+<%@ page import="fr.epsi.jeeProject.beans.*" %><%--
   Created by IntelliJ IDEA.
   User: thomas
   Date: 15/05/19
@@ -30,17 +28,23 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <% Utilisateur myUser=(Utilisateur)session.getAttribute("myUser");
                                 out.println(myUser.getEmail());%>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                            <%
+                                if (myUser.getAdmin()){
+                            %>
                             <a class="dropdown-item" data-toggle="modal" data-target="#create">Créer un utilisateur</a>
-                            <a class="dropdown-item" data-toggle="modal" data-target="#modif">Modifier un utilisateur</a>
+                            <a class="dropdown-item disabled" data-toggle="modal" data-target="#modif">Modifier un utilisateur</a>
                             <a class="dropdown-item" data-toggle="modal" data-target="#delete">Supprimer un utilisateur</a>
                             <div class="dropdown-divider"></div>
+
+                            <%}%>
                             <a class="dropdown-item" href="Disconnection">Se déconnecter</a>
                         </div>
                     </li>
@@ -50,11 +54,53 @@
     </header>
     <div id="content">
         <div class='row'>
+            <div class="column columnButton">
+                <button class="myButton" data-toggle="modal" data-target="#createBlog">Créer un blog</button>
+            </div>
+        </div>
+        <div class='row'>
             <div class="column">
                 <%@ include file="BlogList.jsp" %>
             </div>
         </div>
     </div>
+
+    <div class="modal" id="createBlog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Ecrire un Blog</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="CreateBlog" method="post">
+                        <div class="modalContent">
+                            <input required type="text" id="titre" class="" name="titre" placeholder="Titre">
+                            <textarea required id="description" class="" name="description" placeholder="Description"></textarea>
+                            <SELECT name="statut" size="1">
+                                <% IStatutDao myStatuts=new StatutDao();
+                                    for (fr.epsi.jeeProject.beans.Statut aStatut:myStatuts.getListOfStatuts()) {
+
+                                %><option name="statut" value=<%out.println(aStatut.getId());%>> <% out.println(aStatut.getDescription());
+
+                                    }
+
+                                %>
+                            </SELECT>
+                            <input required type="submit" class="" value="Créer le blog">
+                        </div>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal" id="create">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -66,7 +112,7 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <form action="CreateUser" method="post">
-                        <div id="modalContent">
+                        <div class="modalContent">
                             <input required type="email" id="email" class="" name="email" placeholder="Email">
                             <input required type="text" id="nom" class="" name="nom" placeholder="Nom">
                             <input required type="password" id="createpassword" class="" name="createpassword" placeholder="Mot de passe">
@@ -87,19 +133,19 @@
             </div>
         </div>
     </div>
-    <div class="modal" id="modif">
+    <div class="modal" id="delete">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Modifier un d'utilisateur</h4>
+                    <h4 class="modal-title">Supprimer un utilisateur</h4>
 
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
                     <form action="DeleteUser" method="post">
-                        <div id="modalContent2">
+                        <div class="modalContent">
                             <SELECT name="nom" size="1">
                                 <% IUtilisateurDao myUsers=new UtilisateurDao();
                                     for (Utilisateur aUser:myUsers.getListOfUtilisateur()) {
@@ -121,7 +167,7 @@
             </div>
         </div>
     </div>
-    <div class="modal" id="delete">
+    <div class="modal" id="modif">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->

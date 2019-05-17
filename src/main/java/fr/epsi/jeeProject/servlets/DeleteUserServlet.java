@@ -1,5 +1,6 @@
 package fr.epsi.jeeProject.servlets;
 
+import fr.epsi.jeeProject.beans.Utilisateur;
 import fr.epsi.jeeProject.dao.IUtilisateurDao;
 import fr.epsi.jeeProject.dao.UtilisateurDao;
 import org.apache.logging.log4j.LogManager;
@@ -12,13 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Calendar;
-
-import static fr.epsi.jeeProject.server.PostgresServer.getConnection;
 
 
 /**
@@ -62,4 +57,5 @@ public class DeleteUserServlet extends HttpServlet {
         RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/BlogPage.jsp");
         RequetsDispatcherObj.forward(request, response);
     }
+
 }

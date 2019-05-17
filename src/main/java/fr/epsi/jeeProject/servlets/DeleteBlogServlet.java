@@ -21,7 +21,7 @@ import java.sql.SQLException;
 /**
  * Servlet implementation class IndexServlet
  */
-@WebServlet(value = "/DeleteBlog", name = "DeleteUserServlet")
+@WebServlet(value = "/DeleteBlog", name = "DeleteBlogServlet")
 public class DeleteBlogServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(DeleteBlogServlet.class);
