@@ -25,7 +25,7 @@
     %>
         <div class="card">
             <div class="cardHeader">
-                <div class="logo" style="text-align: center">
+                <div class="logo"" style="text-align: center">
                     <span style="font-size: 18px;"><% out.println(blog.getId()); %></span>
                 </div>
                 <div class="cardTitle">
@@ -59,12 +59,12 @@
                     <li> Date de modification : <% out.println(blog.getDateModification());  %> </li>
                 </ul>
                 <div>
-                    <p><%out.println(blog.getStatut().getDescription());%>
+                    <p class="comText comTextHeader" style="margin:3px"><%out.println(blog.getStatut().getDescription());%>
                     </p>
                 </div>
             </div>
             <div class="commentaire">
-                <div class="comContent" style="border-bottom: 0px; display: flex">
+                <div style="border-bottom: 0px; display: flex; padding: 5px">
                     <a class="comText showMore" href="<%=request.getContextPath()+"/Blog?ID=" + blog.getId()%>">Voir plus</a>
                 </div>
 
@@ -86,8 +86,8 @@
                     %>
                         <div>
                             <form action="CreateCom" method="post" style="margin-bottom: 0px">
-                                <div style="padding:8px; display: flex">
-                                    <input class="input" type="text" name="btnCom" placeholder="Votre commentaire">
+                                <div style="padding:5px; display: flex">
+                                    <input class="input" type="text" name="btnCom" placeholder="Votre commentaire" required>
                                     <input class="input" type="text" name="blog" value="<%out.println(blog.getId());%>" style="display:none;">
                                     <button class="buttonSend" type="submit" value="ok" >Envoyer</button>
                                 </div>
