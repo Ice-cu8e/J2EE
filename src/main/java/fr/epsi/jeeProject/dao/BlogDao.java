@@ -132,7 +132,30 @@ public class BlogDao implements IBlogDao {
            Logger.error("Erreur requete updateStatut" + e);
        }
     }
-
+@Override
+public List<Blog> getAllVisibleBlogs(Utilisateur user){
+    List<Blog> vretour=new ArrayList<Blog>();
+    PreparedStatement p = null;
+    Logger.debug("Début de la requete getAllVisibleBlogs");
+    if (user.getAdmin()){
+       vretour=getAllBlogs();
+    }else {
+        try {
+            p = connection.prepareStatement("select blog.* from blog,\"user\" where (blog.\"EMAIL\"=?) or (blog.\"EMAIL\"!=? and blog.\"STATUT\"=1) group by blog.id,\"blog\".\"EMAIL\"ORDER BY \"DATE_MODIFICATION\" DESC;");
+            p.setString(1, user.getEmail());
+            p.setString(2, user.getEmail());
+            ResultSet resultSet = p.executeQuery();
+            while (resultSet.next()) {
+                vretour.add(resultSetToBlog(resultSet));
+            }
+            Logger.debug("Requete getAllVisibleBlogs OK");
+        } catch (SQLException e) {
+            Logger.debug("Requete getAllVisibleBlogs KO :" + e);
+        }
+    }
+    blogList=vretour;
+    return vretour;
+}
     @Override
     public void deleteBlog(Blog blog) throws SQLException {
         PreparedStatement p = null;

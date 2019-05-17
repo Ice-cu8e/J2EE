@@ -18,8 +18,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     List<Blog> blogs;
+    Utilisateur user=(Utilisateur)session.getAttribute("myUser");
     BlogDao blogDao = new BlogDao();
-    blogs = blogDao.getAllBlogs();
+    blogs = blogDao.getAllVisibleBlogs(user);
     for (Blog blog: blogs) {
     %>
         <div class="card">
@@ -32,7 +33,6 @@
                     <h5 style="margin: 0px"><% out.println(blog.getCreateur().getNom()); %></h5>
                 </div>
                 <%
-                    Utilisateur user=(Utilisateur)session.getAttribute("myUser");
                     if (blog.getCreateur().getEmail().equals(user.getEmail())||(user.getAdmin())) {%>
                 <div class="delete">
                     <%

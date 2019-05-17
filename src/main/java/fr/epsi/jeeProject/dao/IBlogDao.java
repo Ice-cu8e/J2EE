@@ -20,5 +20,6 @@ public interface IBlogDao {
 	List<Reponse> getResponses(Blog blog);
 	List<Blog> getAllBlogs();
 	int getNbBlogs();
+	List<Blog> getAllVisibleBlogs(Utilisateur user);
 	
 }
