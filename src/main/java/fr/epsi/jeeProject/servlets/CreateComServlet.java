@@ -66,6 +66,7 @@ public class CreateComServlet extends HttpServlet {
         Date date = new Date(d.getTime());
         HttpSession session = request.getSession();
         Utilisateur user=(Utilisateur)session.getAttribute("myUser");
+
         if (com != null && user != null) {
             Reponse r = new Reponse();
             r.setCommentaire(com);
@@ -82,13 +83,13 @@ public class CreateComServlet extends HttpServlet {
                 if (jspPageName.equals("Blog")) {
                     url = "/Blog?ID=" + blog.getId();
                 } else if (jspPageName.equals("BlogList")) {
-                    url = "Blogs";
+                    url = "/Blogs";
                 } else {
-                    url = "Blogs";
+                    url = "/Blogs";
                 }
                 response.sendRedirect(request.getContextPath() + url);
             }
-        }else{
+        } else {
             Logger.error("Utilisateur déconnecté ");
             RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Index.jsp");
             RequetsDispatcherObj.forward(request, response);

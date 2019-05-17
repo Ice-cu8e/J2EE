@@ -22,7 +22,7 @@
 <body>
     <header class="nav">
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-bottom: 0px; padding-top: 0px;">
-            <a class="navbar-brand">J2EE</a>
+            <a class="navbar-brand" href="BlogPage.jsp">J2EE</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

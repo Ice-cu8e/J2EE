@@ -16,6 +16,14 @@ html, body {
     width: 100%;
 }
 
+.navbar-collapse {
+    margin: 10px !important;
+}
+
+.navbar {
+    width: 100% !important;
+}
+
 a.navbar-brand{
     color:rgba(255, 255, 255,1)!important;
 }
@@ -131,7 +139,7 @@ a.navbar-brand{
     position: fixed;
     right: 50px;
     bottom: 50px;
-    transition: all 0.1s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 .fab:hover {

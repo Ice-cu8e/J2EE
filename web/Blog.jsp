@@ -28,7 +28,7 @@
 <body>
 <header class="nav">
     <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-bottom: 0px; padding-top: 0px;">
-        <a class="navbar-brand">J2EE</a>
+        <a class="navbar-brand" href="BlogPage.jsp">J2EE</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -101,8 +101,8 @@
                 %>
                 <div>
                     <form action="CreateCom" method="post" style="margin-bottom: 0px">
-                        <div style="padding:8px; display: flex">
-                            <input class="input" type="text" name="btnCom" placeholder="Votre commentaire">
+                        <div style="padding:5px; display: flex">
+                            <input class="input" type="text" name="btnCom" placeholder="Votre commentaire" required>
                             <input class="input" type="text" name="blog" value="<%out.println(blog.getId());%>" style="display:none;">
                             <button class="buttonSend" type="submit" value="ok" >Envoyer</button>
                         </div>
