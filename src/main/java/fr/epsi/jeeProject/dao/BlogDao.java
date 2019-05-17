@@ -128,7 +128,7 @@ public class BlogDao implements IBlogDao {
             p.setDate(3,reponse.getPublication());
             p.setInt(4,reponse.getBlog().getId());
 
-            p.executeQuery();
+            p.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

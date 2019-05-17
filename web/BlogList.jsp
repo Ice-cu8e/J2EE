@@ -52,19 +52,23 @@
                 <div class="comContent" style="border-bottom: 0px; display: flex">
                     <a class="comText showMore" href="<%=request.getContextPath()+"/Blog?ID=" + blog.getId()%>">Voir plus</a>
                 </div>
-                <%
-                    blogDao.getResponses(blog);
-                    if (blogDao.getResponses(blog).size() != 0) {
-                        Reponse reponse = blogDao.getResponses(blog).get(0);
-                        %>
-                            <div class="comContent">
-                                <div style="display: flex">
-                                    <p class="comText comTextHeader"><% out.println(reponse.getBlogger().getNom());  %></p>
-                                    <p class="comText comTextHeader
-                                    " style="margin-left: auto"><% out.println(reponse.getPublication());  %></p>
-                                </div>
-                                <p class="comText"><% out.println(reponse.getCommentaire());  %></p>
-                            </div>
+
+                    <%
+                        if (blogDao.getResponses(blog).size() != 0) {
+                            Reponse reponse = blogDao.getResponses(blog).get(0);
+                    %>
+                    <div class="comContent">
+                        <div style="display: flex">
+                            <p class="comText comTextHeader"><% out.println(reponse.getBlogger().getNom());  %></p>
+                            <p class="comText comTextHeader
+                            " style="margin-left: auto"><% out.println(reponse.getPublication());  %></p>
+                        </div>
+
+                        <p class="comText"><% out.println(reponse.getCommentaire());  %></p>
+                    </div>
+                    <%
+                        }
+                    %>
                         <div>
                             <form style="margin-bottom: 0px">
                                 <div style="padding:8px; display: flex">
@@ -84,13 +88,9 @@
                                             blogDao.addReponse(r);
                                         }
                                     %>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-                <%
-
-                    }
-                %>
             </div>
         </div>
         <%
