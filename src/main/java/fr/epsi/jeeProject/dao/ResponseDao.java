@@ -15,10 +15,11 @@ import java.util.List;
 import static fr.epsi.jeeProject.listener.StartupListener.connection;
 
 public class ResponseDao {
-    private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(BlogDao.class);
+    private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(ResponseDao.class);
 
     //@Override
     public Reponse getResponse(Integer id, Blog blog) {
+        Logger.debug("Debut de la requete getResponse");
         for (Reponse r: blog.getListOfReponses()) {
             if (r.getId() == id) {
                 return r;
@@ -29,19 +30,20 @@ public class ResponseDao {
 
     //@Override
     public List<Reponse> getResponsesBlog(Blog blog) {
-        List<Reponse> status = new ArrayList<Reponse>();
+        List<Reponse> reponseList = new ArrayList<Reponse>();
         PreparedStatement p = null;
+        Logger.debug("Debut de la requete getResponsesBlog");
         try {
             p = connection.prepareStatement("SELECT * FROM blog_commentaires WHERE blog_id = " + blog.getId());
             ResultSet resultSet = p.executeQuery();
             while (resultSet.next()) {
-                status.add(resultSetToStatut(resultSet));
+                reponseList.add(resultSetToStatut(resultSet));
             }
             Logger.debug("Requete getResponsesBlog OK");
         } catch (SQLException e) {
             Logger.debug("Requete getResponsesBlog KO"+e);
         }
-        return status;
+        return reponseList;
     }
 
     private Reponse resultSetToStatut(ResultSet resultSet) {

@@ -20,8 +20,8 @@
     <title>J2EE</title>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <header class="nav">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-bottom: 0px; padding-top: 0px;">
             <a class="navbar-brand">J2EE</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -52,7 +52,7 @@
             </div>
         </nav>
     </header>
-    <div id="content">
+    <div id="content" style="margin-top: 50px;">
         <div class='row'>
             <div class="column columnButton">
                 <button class="myButton" data-toggle="modal" data-target="#createBlog">Créer un blog</button>
@@ -148,7 +148,8 @@
                         <div class="modalContent">
                             <SELECT name="nom" size="1">
                                 <% IUtilisateurDao myUsers=new UtilisateurDao();
-                                    for (Utilisateur aUser:myUsers.getListOfUtilisateur()) {
+                                    List<Utilisateur> users = myUsers.getListOfUtilisateur();
+                                    for (Utilisateur aUser:users) {
                                         if(!aUser.getAdmin()){
                                             %><option name="user" value=<%out.println(aUser.getEmail());%>> <% out.println(aUser.getEmail());
                                         }

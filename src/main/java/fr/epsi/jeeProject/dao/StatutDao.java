@@ -13,12 +13,12 @@ import java.util.List;
 import static fr.epsi.jeeProject.listener.StartupListener.connection;
 
 public class StatutDao implements IStatutDao {
-    private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(BlogDao.class);
-
+    private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(StatutDao.class);
+    List<Statut> statutList = new ArrayList<Statut>();
 
     @Override
     public Statut getStatut(Integer id) {
-        for (Statut s: getListOfStatuts()) {
+        for (Statut s: statutList) {
             if (s.getId().intValue() == id.intValue()) {
                 return s;
             }
@@ -39,6 +39,7 @@ public class StatutDao implements IStatutDao {
         } catch (SQLException e) {
             Logger.debug("Requete getListOfStatuts KO"+e);
         }
+        statutList = status;
         return status;
     }
 
