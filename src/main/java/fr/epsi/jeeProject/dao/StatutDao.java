@@ -16,6 +16,9 @@ public class StatutDao implements IStatutDao {
     private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(StatutDao.class);
     List<Statut> statutList = new ArrayList<Statut>();
 
+    public StatutDao(){
+        getListOfStatuts();
+    }
     @Override
     public Statut getStatut(Integer id) {
         for (Statut s: statutList) {

@@ -119,6 +119,19 @@ public class BlogDao implements IBlogDao {
             }
         }
     }
+    @Override
+    public void updateStatut(Blog blog) throws SQLException {
+       try {
+           Logger.debug("Début de la requete updateStatut");
+           PreparedStatement p = connection.prepareStatement("update blog set \"STATUT\"=? where id=?;");
+           p.setInt(1, blog.getStatut().getId());
+           p.setInt(2, blog.getId());
+           p.executeUpdate();
+           Logger.debug("Requete updateStatut OK");
+       }catch (SQLException e){
+           Logger.error("Erreur requete updateStatut" + e);
+       }
+    }
 
     @Override
     public void deleteBlog(Blog blog) throws SQLException {

@@ -35,7 +35,8 @@
                     Utilisateur user=(Utilisateur)session.getAttribute("myUser");
                     if (blog.getCreateur().getEmail().equals(user.getEmail())||(user.getAdmin())) {%>
                 <div class="delete">
-                   <a href="DeleteBlog?ID=<%out.println(blog.getId());%>"> <i class="material-icons red">delete</i></a>
+                    <a href="ModifyBlog?ID=<%out.println(blog.getId());%>&type=2"> <i class="material-icons blue">archive</i></a>
+                    <a href="DeleteBlog?ID=<%out.println(blog.getId());%>"> <i class="material-icons red">delete</i></a>
                 </div>
                 <%}%>
             </div>
@@ -47,6 +48,10 @@
                     <li> Date de création : <% out.println(blog.getDateCreation());  %> </li>
                     <li> Date de modification : <% out.println(blog.getDateModification());  %> </li>
                 </ul>
+                <div>
+                    <p><%out.println(blog.getStatut().getDescription());%>
+                    </p>
+                </div>
             </div>
             <div class="commentaire">
                 <div class="comContent" style="border-bottom: 0px; display: flex">
