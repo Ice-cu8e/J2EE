@@ -53,11 +53,11 @@ public class ModifyBlogServlet extends HttpServlet {
         String jspPageName = uriNames[uriNames.length-1];
 
         IBlogDao blogDao=new BlogDao();
+        IStatutDao statutDao=new StatutDao();
         int idBlog=Integer.parseInt(request.getParameter("ID"));
         int id=Integer.parseInt(request.getParameter("type"));
         Blog myBlog =blogDao.getBlog(idBlog);
-        Statut myStatut=new Statut();
-        myStatut.setId(id);
+        Statut myStatut= statutDao.getStatut(id);
         myBlog.setStatut(myStatut);
         try {
             blogDao.updateStatut(myBlog);

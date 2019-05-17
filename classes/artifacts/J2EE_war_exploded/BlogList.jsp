@@ -25,7 +25,7 @@
     %>
         <div class="card">
             <div class="cardHeader">
-                <div class="logo"" style="text-align: center">
+                <div class="logo" style="text-align: center">
                     <span style="font-size: 18px;"><% out.println(blog.getId()); %></span>
                 </div>
                 <div class="cardTitle">
@@ -58,10 +58,10 @@
                     <li> Date de création : <% out.println(blog.getDateCreation());  %> </li>
                     <li> Date de modification : <% out.println(blog.getDateModification());  %> </li>
                 </ul>
-                <div>
-                    <p class="comText comTextHeader" style="margin:3px"><%out.println(blog.getStatut().getDescription());%>
-                    </p>
-                </div>
+            </div>
+            <div>
+                <p class="comText comTextHeader" style="margin:3px"><%out.println(blog.getStatut().getDescription());%>
+                </p>
             </div>
             <div class="commentaire">
                 <div style="border-bottom: 0px; display: flex; padding: 5px">
